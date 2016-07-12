@@ -1,0 +1,23 @@
+{
+  "name": "hugito-frontend",
+  "version": "1.0.0",
+  "description": "Hugito Frontend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaodias/hugito-frontend.git"
+  },
+  "author": "João Dias <diasjoaoac@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joaodias/hugito-frontend/issues"
+  },
+  "homepage": "https://github.com/joaodias/hugito-frontend#readme",
+  "devDependencies": {
+    "babel-loader": "^5.3.3",
+    "webpack": "^1.13.1"
+  }
+}
