@@ -1,0 +1,167 @@
+/* Colors*/
+@white : rgb(255, 255, 255);
+@black : rgb(0, 0, 0);
+@gray-light : rgb(235, 236, 237);
+@gray-custom : rgb(36, 46, 65);
+@red-lighter : rgb(239, 174, 190);
+@red-light : rgb(231, 106, 132);
+@red-normal : rgb(227, 94, 98);
+@red-dark : rgb(202, 63, 60);
+@yellow-lighter : rgb(250, 223, 122);
+@yellow-light : rgb(247, 198, 65);
+@yellow-normal : rgb(242, 171, 61);
+@yellow-dark : rgb(235, 140, 55);
+@green-lighter : rgb(166, 245, 224);
+@green-light : rgb(110, 236, 196);
+@green-normal : rgb(104, 219, 160);
+@green-dark : rgb(87, 177, 133);
+@blue-lighter : rgb(136, 221, 248);
+@blue-light : rgb(75, 193, 245);
+@blue-normal : rgb(65, 158, 192);
+@blue-dark : rgb(57, 137, 166);
+@violet-lighter : rgb(188, 176, 243);
+@violet-light : rgb(132, 113, 244);
+@violet-normal : rgb(82, 92, 188);
+@violet-dark : rgb(58, 67, 146);
+
+.center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.center-horizontal {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.center-vertical {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.transition-cool {
+    -webkit-transition: all .10s ease-in-out;
+       -moz-transition: all .10s ease-in-out;
+        -ms-transition: all .10s ease-in-out;
+         -o-transition: all .10s ease-in-out;
+            transition: all .10s ease-in-out;
+}
+
+.active-menu-item {
+    background-color: rgba(75, 193, 245, 0.5);
+    color: @gray-light;
+}
+
+body{
+    font-family: 'Montserrat Light', arial;
+    font-size: 12px;
+    padding: 0px;
+    margin: 0px;
+}
+
+#app{
+    height: 100%;
+    width: 100%;
+}
+
+#sidebar {
+    position: absolute;
+    padding-top: 50px;
+    top: 0px;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    background-color: @gray-custom;
+    #menu-list {
+        list-style-type: none;
+        padding: 0;
+        padding-top: 50px;
+        #menu-item{
+            .transition-cool;
+            position: relative;
+            width: 250px;
+            height: 50px;
+            a{
+                .center-vertical;
+                left: 50px;
+                text-decoration: none;
+                color: @gray-light;
+                &:hover{
+                    color: @blue-light;
+                }
+                cursor: pointer;
+            }
+        }
+    }
+    #sidebar-logo {
+        .center-horizontal;
+        width: 100px;
+        bottom: 50px;
+    }
+}
+
+#topbar {
+    position: fixed;
+    z-index: 10000000000000000;
+    height: 50px;
+    width: 100%;
+    background-color: @white;
+    -webkit-box-shadow: 0px 1px 1px 0px @gray-light;
+    -moz-box-shadow: 0px 1px 1px 0px @gray-light;
+    box-shadow: 0px 1px 1px 0px @gray-light;
+    padding: 0px;
+    margin: 0px;
+    #repository-section {
+        position: relative;
+        height: 50px;
+        width: 250px;
+        #repository-selection {
+            .center-vertical;
+            #repository-dropdown {
+                box-shadow: none;
+                width: 250px;
+                height: 50px;
+                border: none;
+                border-radius: 0px;
+                color: @gray-custom;
+                background-color: @white;
+                &:hover{
+                    color: @blue-light;
+                }
+            }
+            .dropdown-menu{
+                width: 250px;
+                -webkit-transform: translate(0px, -2px);
+                   -moz-transform: translate(0px, -2px);
+                    -ms-transform: translate(0px, -2px);
+                     -o-transform: translate(0px, -2px);
+                        transform: translate(0px, -2px);
+                li{
+                    position: relative;
+                    a{
+                        color: @gray-custom;
+                        height: 50px;
+                    }
+                }
+            }
+        }
+    }
+    #user-section {
+        position: absolute;
+        right: 50px;
+        .center-vertical;
+        #user-dropdown {
+            box-shadow: none;
+            &:hover, &:focus, &:active {
+                background-color: @white;
+                color: @blue-light;
+                border-color: @blue-light;
+            }
+        }
+    }
+}
+
