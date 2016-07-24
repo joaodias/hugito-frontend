@@ -11,7 +11,7 @@ class UserDropdown extends Component{
         const {userName} = this.props;
         return(
             <div id="user">
-                <DropdownButton title={userName.value} id="user-dropdown" pullRight className="dropdown-toggle btn" onSelect={this.onSelect.bind(this)}>
+                <DropdownButton bsSize="small" title={userName.value} id="user-dropdown" pullRight className="dropdown-toggle btn" onSelect={this.onSelect.bind(this)}>
                     <MenuItem eventKey="Option 1">Option 1</MenuItem>
                     <MenuItem eventKey="Option 2">Option 2</MenuItem>
                     <MenuItem eventKey="Option 3">Option 3</MenuItem>
