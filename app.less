@@ -1,4 +1,5 @@
 /* Colors*/
+
 @white : rgb(255, 255, 255);
 @black : rgb(0, 0, 0);
 @gray-light : rgb(235, 236, 237);
@@ -23,7 +24,8 @@
 @violet-light : rgb(132, 113, 244);
 @violet-normal : rgb(82, 92, 188);
 @violet-dark : rgb(58, 67, 146);
-
+@sidebar-size: 250px;
+@topbar-size: 50px;
 .center {
     position: absolute;
     left: 50%;
@@ -45,10 +47,10 @@
 
 .transition-cool {
     -webkit-transition: all .10s ease-in-out;
-       -moz-transition: all .10s ease-in-out;
-        -ms-transition: all .10s ease-in-out;
-         -o-transition: all .10s ease-in-out;
-            transition: all .10s ease-in-out;
+    -moz-transition: all .10s ease-in-out;
+    -ms-transition: all .10s ease-in-out;
+    -o-transition: all .10s ease-in-out;
+    transition: all .10s ease-in-out;
 }
 
 .active-menu-item {
@@ -56,43 +58,54 @@
     color: @white;
 }
 
-body{
-    overflow-x: hidden;
-    overflow-y: auto;
+.normal-button-style {
+    box-shadow: none;
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: @white;
+        color: @blue-light;
+        border-color: @blue-light;
+    }
+}
+
+body {
+    overflow: hidden;
     font-family: 'Montserrat Light', arial;
-    font-size: 12px;
+    font-size: 14px;
     padding: 0px;
     margin: 0px;
 }
 
-#app{
+#app {
     height: 100%;
     width: 100%;
 }
 
 #sidebar {
     position: fixed;
-    padding-top: 50px;
+    z-index: 100000000;
+    padding-top: @topbar-size;
     top: 0px;
     left: 0;
     height: 100%;
-    width: 250px;
+    width: @sidebar-size;
     background-color: @gray-custom;
     #menu-list {
         list-style-type: none;
         padding: 0;
-        padding-top: 50px;
-        #menu-item{
+        padding-top: @topbar-size;
+        #menu-item {
             .transition-cool;
             position: relative;
-            width: 250px;
-            height: 50px;
-            a{
+            width: @sidebar-size;
+            height: @topbar-size;
+            a {
                 .center-vertical;
-                left: 50px;
+                left: @topbar-size;
                 text-decoration: none;
                 color: @gray-light;
-                &:hover{
+                &:hover {
                     color: @blue-light;
                 }
                 cursor: pointer;
@@ -102,14 +115,13 @@ body{
     #sidebar-logo {
         .center-horizontal;
         width: 100px;
-        bottom: 50px;
+        bottom: @topbar-size;
     }
 }
 
 #topbar {
     position: fixed;
-    z-index: 10000000000000000;
-    height: 50px;
+    height: @topbar-size;
     width: 100%;
     background-color: @white;
     -webkit-box-shadow: 0px 1px 1px 0px @gray-light;
@@ -117,93 +129,183 @@ body{
     box-shadow: 0px 1px 1px 0px @gray-light;
     padding: 0px;
     margin: 0px;
+    z-index: 1000000000000000;
     #repository-section {
         position: relative;
-        height: 50px;
-        width: 250px;
+        height: @topbar-size;
+        width: @sidebar-size;
         #repository-selection {
             .center-vertical;
             #repository-dropdown {
                 box-shadow: none;
-                width: 250px;
-                height: 50px;
+                width: @sidebar-size;
+                height: @topbar-size;
                 border: none;
                 border-radius: 0px;
                 color: @gray-light;
                 background-color: rgba(36, 46, 65, 0.7);
-                &:hover{
+                &:hover {
                     color: @blue-light;
                 }
             }
-            .dropdown-menu{
-                width: 250px;
+            .dropdown-menu {
+                width: @sidebar-size;
                 -webkit-transform: translate(0px, -2px);
-                   -moz-transform: translate(0px, -2px);
-                    -ms-transform: translate(0px, -2px);
-                     -o-transform: translate(0px, -2px);
-                        transform: translate(0px, -2px);
-                li{
+                -moz-transform: translate(0px, -2px);
+                -ms-transform: translate(0px, -2px);
+                -o-transform: translate(0px, -2px);
+                transform: translate(0px, -2px);
+                li {
                     position: relative;
-                    a{
+                    a {
                         color: @gray-custom;
-                        height: 50px;
+                        height: @topbar-size;
                     }
                 }
             }
         }
     }
-    #user-section {
+    #user-section {
+        z-index: 10000000;
         position: absolute;
-        right: 50px;
+        right: @topbar-size;
         .center-vertical;
         #user-dropdown {
-            box-shadow: none;
-            &:hover, &:focus, &:active {
-                background-color: @white;
-                color: @blue-light;
-                border-color: @blue-light;
+            .normal-button-style;
+        }
+    }
+    #control-section {
+        .center-vertical;
+        left: 300px;
+        width: 100%;
+        #content-editor-controls{
+            position: relative;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            li{
+                float: left;
+                padding-left: 14px;
+                padding-right: 14px;
+                .btn{
+                    margin-top: 2.5px;
+                    .normal-button-style;
+                }
             }
         }
     }
-    #control-section{
-        .center-vertical;
-        left: 300px;
-    }
 }
 
-#main-section{
-    .center-horizontal;
-    margin-left: 125px;
-    margin-top: 100px;
-    height: 87%;
-    width: 60%;
-    #content-list{
+#main-section {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    margin-top: @topbar-size;
+    margin-left: @sidebar-size;
+    overflow: hidden;
+    #content-list {
+        .center-horizontal;
+        padding-top: @topbar-size;
+        max-height: 100%;
+        width: 80%;
+        overflow-y: scroll;
         .transition-cool;
-        #list-item{
+        #list-item {
             position: relative;
-            .list-group-item{
+            .list-group-item {
                 .transition-cool;
-                &:hover{
+                &:hover {
                     cursor: pointer;
                     .active-menu-item;
+                    h4{
+                        color: @white;
+                    }
                 }
-                h4{
+                &:focus{
+                    outline: 0;
+                }
+                h4 {
                     font-family: 'Montserrat', arial;
                     font-size: 16px;
                 }
             }
-            #list-button{
+            #list-button {
                 .transition-cool;
                 .center-vertical;
-                right: 50px;
-                &:hover, &:focus, &:active {
+                right: @topbar-size;
+                &:hover,
+                &:focus,
+                &:active {
                     background-color: @white;
                     color: @red-light;
                     border-color: @red-light;
-                    outline:0;
+                    outline: 0;
                 }
             }
         }
     }
+    #markdown-editor {
+            width: 100%;
+            position: absolute;
+            height: 100%;
+            top: 0;
+        .editor {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            border-style: none;
+            resize: none;
+            padding-top: 50px;
+            padding-left: 24px;
+            padding-right: 24px;
+            &:focus {
+                outline-width: 0;
+            }
+        }
+        .preview {
+            position: absolute;
+            width: 50%;
+            max-height: 100%;
+            right: 0;
+            padding-top: 25px;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+        #split-line {
+            position: absolute;
+            width: 1px;
+            border-width: 1px;
+            height: 100%;
+            border-style: solid;
+            border-color: @gray-light;
+            top: 1px;
+            z-index: 100000000;
+            .center-horizontal;
+        }
+        .label-wrapper {
+            position: absolute;
+            width: 50%;
+            height: 50px;
+            background-color: @white;
+            z-index: 100000;
+            #markdown-label {
+                .center-vertical;
+                z-index: 1;
+                margin-left: 24px;
+                background-color: @gray-custom;
+            }
+            #preview-label {
+                .center-vertical;
+                z-index: 1;
+                margin-left: 24px;
+                background-color: @gray-custom;
+            }
+        }
+        #right-label-wrapper {
+            left: 50%;
+        }
+    }
 }
-
