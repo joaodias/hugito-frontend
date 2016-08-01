@@ -97,8 +97,6 @@ class App extends Component{
                 <TopbarSection
                     userName={this.state.userName}
                     setUserName={this.setUserName.bind(this)}
-                    repositories={this.state.repositories}
-                    setRepository={this.setRepository.bind(this)}
                     showContent={this.state.showContent}
                     showContentEditor={this.state.showContentEditor}
                     fileName={this.state.fileName}
@@ -107,6 +105,8 @@ class App extends Component{
                     menuItems={this.state.menuItems}
                     activeMenuItem={this.state.activeMenuItem}
                     setMenuItem={this.setMenuItem.bind(this)}
+                    repositories={this.state.repositories}
+                    setRepository={this.setRepository.bind(this)}
                 />
                 <MainSection
                     showContent={this.state.showContent}
