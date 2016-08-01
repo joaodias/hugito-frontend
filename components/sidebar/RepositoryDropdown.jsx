@@ -27,7 +27,7 @@ class RepositoryDropdown extends Component{
     }
 }
 
-RepositoryDropdown.propTypes = {
+RepositoryDropdown.propTypes = {
     repositories: React.PropTypes.array.isRequired,
     setRepository: React.PropTypes.func.isRequired
 }

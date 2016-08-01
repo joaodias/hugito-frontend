@@ -84,18 +84,53 @@ body {
 
 #sidebar {
     position: fixed;
-    z-index: 100000000;
-    padding-top: @topbar-size;
+    z-index: 100000000000000;
     top: 0px;
     left: 0;
     height: 100%;
     width: @sidebar-size;
     background-color: @gray-custom;
+    #repository-section {
+        position: relative;
+        height: @topbar-size;
+        width: @sidebar-size;
+        #repository-selection {
+            .center-vertical;
+            #repository-dropdown {
+                box-shadow: none;
+                width: @sidebar-size;
+                height: @topbar-size;
+                border: none;
+                border-radius: 0px;
+                color: @gray-light;
+                background-color: rgba(36, 46, 65, 0.7);
+                &:hover {
+                    color: @blue-light;
+                }
+            }
+            .dropdown-menu {
+                width: @sidebar-size;
+                -webkit-transform: translate(@sidebar-size, -@topbar-size);
+                -moz-transform: translate(@sidebar-size, -@topbar-size);
+                -ms-transform: translate(@sidebar-size, -@topbar-size);
+                -o-transform: translate(@sidebar-size, -@topbar-size);
+                transform: translate(@sidebar-size, -@topbar-size);
+                li {
+                    position: relative;
+                    a {
+                        color: @gray-custom;
+                        height: @topbar-size;
+                    }
+                }
+            }
+        }
+    }
     #menu-list {
         list-style-type: none;
         padding: 0;
         padding-top: @topbar-size;
         #menu-item {
+            z-index: 1;
             .transition-cool;
             position: relative;
             width: @sidebar-size;
@@ -130,41 +165,6 @@ body {
     padding: 0px;
     margin: 0px;
     z-index: 1000000000000000;
-    #repository-section {
-        position: relative;
-        height: @topbar-size;
-        width: @sidebar-size;
-        #repository-selection {
-            .center-vertical;
-            #repository-dropdown {
-                box-shadow: none;
-                width: @sidebar-size;
-                height: @topbar-size;
-                border: none;
-                border-radius: 0px;
-                color: @gray-light;
-                background-color: rgba(36, 46, 65, 0.7);
-                &:hover {
-                    color: @blue-light;
-                }
-            }
-            .dropdown-menu {
-                width: @sidebar-size;
-                -webkit-transform: translate(0px, -2px);
-                -moz-transform: translate(0px, -2px);
-                -ms-transform: translate(0px, -2px);
-                -o-transform: translate(0px, -2px);
-                transform: translate(0px, -2px);
-                li {
-                    position: relative;
-                    a {
-                        color: @gray-custom;
-                        height: @topbar-size;
-                    }
-                }
-            }
-        }
-    }
     #user-section {
         z-index: 10000000;
         position: absolute;
