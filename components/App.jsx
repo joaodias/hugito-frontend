@@ -37,14 +37,27 @@ class App extends Component{
                 {header: 'Content File Name #4', footer: 'Written by Joao Dias in xyz3'}
             ],
             showContent: { value: false },
-            showConfiguration: { value: false }
+            showConfiguration: { value: false },
+            showContentEditor: { value: false },
+            source: { value: "# My awesome markdown" },
+            fileName: { value: "" }
         }
     }
     setMenuItem(activeMenuItem){
         if (activeMenuItem.value === 'Website Content') {
-            this.fetchContent();
+            // TODO: fetch content from server
+            // TODO: throw notifictions on errors
+            // Hide configuration and show content
+            this.setShowConfiguration(false);
+            this.setShowContentEditor(false);
+            this.setShowContent(true);
         } else if (activeMenuItem.value === 'Website Configuration') {
-            this.fetchConfiguration();
+            // TODO: fetch configuration from server
+            // TODO: throw notifictions on errors
+            // Hide content and show configuration
+            this.setShowContent(false);
+            this.setShowContentEditor(false);
+            this.setShowConfiguration(true);
         }
         this.setState({activeMenuItem});
     }
@@ -63,15 +76,20 @@ class App extends Component{
     setShowConfiguration(value){
         this.state.showConfiguration.value = value;
     }
-    fetchContent(){
-        // TODO: fetch content from server
-        this.setShowConfiguration(false);
-        this.setShowContent(true);
-    }
-    fetchConfiguration(){
-        // TODO: fetch configuration from server
+    setShowContentEditor(showContentEditor){
+        // TODO: fetch the content markdown
+        // Hide content list and display the editor
+        // this.setShowConfiguration(false);
+        // this.setShowContent(false);
+        this.state.showContentEditor.value = showContentEditor.value;
+        this.forceUpdate();
         this.setShowContent(false);
-        this.setShowConfiguration(true);
+    }
+    setSource(source){
+        this.setState({source});
+    }
+    setFileName(fileName){
+        this.setState({fileName});
     }
     render(){
         return (
@@ -82,6 +100,8 @@ class App extends Component{
                     repositories={this.state.repositories}
                     setRepository={this.setRepository.bind(this)}
                     showContent={this.state.showContent}
+                    showContentEditor={this.state.showContentEditor}
+                    fileName={this.state.fileName}
                 />
                 <SidebarSection
                     menuItems={this.state.menuItems}
@@ -90,8 +110,14 @@ class App extends Component{
                 />
                 <MainSection
                     showContent={this.state.showContent}
+                    showContentEditor={this.state.showContentEditor}
+                    setShowContentEditor={this.setShowContentEditor.bind(this)}
                     contentElements={this.state.contentElements}
                     setContentElements={this.setContentElements.bind(this)}
+                    source={this.state.source}
+                    setSource={this.setSource.bind(this)}
+                    fileName={this.state.fileName}
+                    setFileName={this.setFileName.bind(this)}
                 />
                 </div>
         )
