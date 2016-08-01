@@ -20,7 +20,9 @@ TopbarSection.propTypes = {
     setUserName: React.PropTypes.func.isRequired,
     repositories: React.PropTypes.array.isRequired,
     setRepository: React.PropTypes.func.isRequired,
-    showContent: React.PropTypes.object.isRequired
+    showContent: React.PropTypes.object.isRequired,
+    showContentEditor: React.PropTypes.object.isRequired,
+    fileName: React.PropTypes.object.isRequired
 }
 
 export default TopbarSection
