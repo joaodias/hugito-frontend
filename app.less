@@ -30,19 +30,31 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(50%, 50%);
+       -moz-transform: translate(50%, 50%);
+        -ms-transform: translate(50%, 50%);
+         -o-transform: translate(50%, 50%);
+            transform: translate(50%, 50%);
 }
 
 .center-horizontal {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+       -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+         -o-transform: translateX(-50%);
+            transform: translateX(-50%);
 }
 
 .center-vertical {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+       -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+         -o-transform: translateY(-50%);
+            transform: translateY(-50%);
 }
 
 .transition-cool {
@@ -125,7 +137,7 @@ body {
             }
         }
     }
-    #menu-list {
+    .menu-list {
         list-style-type: none;
         padding: 0;
         padding-top: @topbar-size;
@@ -307,5 +319,57 @@ body {
         #right-label-wrapper {
             left: 50%;
         }
+    }
+}
+
+#login-page{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: @gray-custom;
+    #login-logo{
+        .center-horizontal;
+        top: 50px;
+        width: 180px;
+    }
+    .btn{
+        .center-horizontal;
+        .center-vertical;
+        text-align: center;
+        width: 250px;
+        outline: 0;
+        -webkit-transform: translateX(-125px);
+           -moz-transform: translateX(-125px);
+            -ms-transform: translateX(-125px);
+             -o-transform: translateX(-125px);
+                transform: translateX(-125px);
+    }
+    h5{
+        .center-horizontal;
+        .center-vertical;
+        line-height: 1.5;
+        color: @green-normal;
+        width: 400px;
+        text-align: center;
+        -webkit-transform: translate(-200px, 100px);
+           -moz-transform: translate(-200px, 100px);
+            -ms-transform: translate(-200px, 100px);
+             -o-transform: translate(-200px, 100px);
+                transform: translate(-200px, 100px);
+    }
+    #login-list{
+        .center-horizontal;
+        padding: 0px;
+        li{
+            color: @white;
+            display: inline;
+            list-style: none;
+            float: left;
+            padding: 10px;
+            a{
+                color: @white;
+            }
+        }
+        bottom: 50px;
     }
 }
