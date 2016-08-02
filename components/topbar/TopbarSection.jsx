@@ -7,18 +7,19 @@ class TopbarSection extends Component{
         return(
             <div id="topbar">
                 <UserSection {...this.props}/>
-                <ControlSection {...this.props}/>
+                { this.props.repositoryIsValid.value === true ? <ControlSection {...this.props}/> : null }
             </div>
         )
     }
 }
 
 TopbarSection.propTypes = {
-    userName: React.PropTypes.object.isRequired,
-    setUserName: React.PropTypes.func.isRequired,
+    user: React.PropTypes.object.isRequired,
+    setUser: React.PropTypes.func.isRequired,
     showContent: React.PropTypes.object.isRequired,
     showContentEditor: React.PropTypes.object.isRequired,
-    fileName: React.PropTypes.object.isRequired
+    fileName: React.PropTypes.object.isRequired,
+    repositoryIsValid: React.PropTypes.object.isRequired
 }
 
 export default TopbarSection

@@ -7,17 +7,18 @@ class App extends Component{
     constructor(props){
         super(props);
         this.state = {
-            userName: {value: 'Joao Dias'},
+            user: {name: 'Joao Dias'},
             menuItems: [
                 {value: 'Website Configuration'},
                 {value: 'Website Content'}
             ],
             activeMenuItem: {value: 'Website Content'},
             repositories: [
-                {value: 'Repository #1'},
-                {value: 'Repository #2'},
-                {value: 'Repository #3'}
+                {repositoryName: 'Repository #1'},
+                {repositoryName: 'Repository #2'},
+                {repositoryName: 'Repository #3'}
             ],
+            repositoryIsValid: {value: false},
             contentElements: [
                 {header: 'Content File Name #1', footer: 'Written by Joao Dias in xyz'},
                 {header: 'Content File Name #2', footer: 'Written by Joao Dias in xyz1'},
@@ -61,11 +62,22 @@ class App extends Component{
         }
         this.setState({activeMenuItem});
     }
-    setUserName(userName){
-        this.setState({userName});
+    setUser(user){
+        this.setState({user});
     }
     setRepository(repository){
         this.setState({repository});
+    }
+    validateRepository(repositoryName){
+        // TODO: ask the server if the repository is valid
+        var repositoryIsValid = {value: true};
+
+        // Test Case
+        //
+        // if (repositoryName === "Repository #1") {
+        //     repositoryIsValid = false;
+        // }
+        this.setState({repositoryIsValid});
     }
     setContentElements(contentElement){
         this.setState({contentElement});
@@ -95,11 +107,12 @@ class App extends Component{
         return (
             <div>
                 <TopbarSection
-                    userName={this.state.userName}
-                    setUserName={this.setUserName.bind(this)}
+                    user={this.state.user}
+                    setUser={this.setUser.bind(this)}
                     showContent={this.state.showContent}
                     showContentEditor={this.state.showContentEditor}
                     fileName={this.state.fileName}
+                    repositoryIsValid={this.state.repositoryIsValid}
                 />
                 <SidebarSection
                     menuItems={this.state.menuItems}
@@ -107,6 +120,8 @@ class App extends Component{
                     setMenuItem={this.setMenuItem.bind(this)}
                     repositories={this.state.repositories}
                     setRepository={this.setRepository.bind(this)}
+                    validateRepository={this.validateRepository.bind(this)}
+                    repositoryIsValid={this.state.repositoryIsValid}
                 />
                 <MainSection
                     showContent={this.state.showContent}
@@ -118,6 +133,7 @@ class App extends Component{
                     setSource={this.setSource.bind(this)}
                     fileName={this.state.fileName}
                     setFileName={this.setFileName.bind(this)}
+                    repositoryIsValid={this.state.repositoryIsValid}
                 />
                 </div>
         )

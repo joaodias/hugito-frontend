@@ -13,7 +13,8 @@ class RepositorySection extends Component{
 
 RepositorySection.propTypes = {
     repositories: React.PropTypes.array.isRequired,
-    setRepository: React.PropTypes.func.isRequired
+    setRepository: React.PropTypes.func.isRequired,
+    validateRepository: React.PropTypes.func.isRequired
 }
 
 export default RepositorySection
