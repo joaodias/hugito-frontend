@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import ContentList from './ContentList.jsx'
 import ContentEditor from './ContentEditor.jsx'
+import Welcome from './Welcome.jsx'
 
 class MainSection extends Component{
     render(){
@@ -8,6 +9,7 @@ class MainSection extends Component{
             <div id="main-section">
                 { (this.props.showContent.value === true && this.props.repositoryIsValid.value === true) ? <ContentList {...this.props}/> : null }
                 { (this.props.showContentEditor.value === true && this.props.repositoryIsValid.value === true) ? <ContentEditor {...this.props}/> : null }
+                { this.props.repositoryIsValid.value === false ? <Welcome /> : null }
             </div>
         )
     }

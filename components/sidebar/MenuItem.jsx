@@ -8,7 +8,9 @@ class MenuItem extends Component{
     }
     render(){
         const {menuItem, activeMenuItem} = this.props;
-        const active = menuItem === activeMenuItem ? 'active-menu-item' : '';
+        console.log("Values: " + menuItem.value + " " + activeMenuItem.value);
+        const active = menuItem.value === activeMenuItem.value ? 'active-menu-item' : '';
+        console.log("Active: " + active);
         return (
             <li id="menu-item" className={active}>
                 <a onClick={this.onClick.bind(this)}>

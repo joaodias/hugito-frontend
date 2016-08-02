@@ -9,10 +9,10 @@ class App extends Component{
         this.state = {
             user: {name: 'Joao Dias'},
             menuItems: [
-                {value: 'Website Configuration'},
-                {value: 'Website Content'}
+                {value: 'Page Configuration'},
+                {value: 'Page Content'}
             ],
-            activeMenuItem: {value: 'Website Content'},
+            activeMenuItem: {value: 'Page Content'},
             repositories: [
                 {repositoryName: 'Repository #1'},
                 {repositoryName: 'Repository #2'},
@@ -37,7 +37,7 @@ class App extends Component{
                 {header: 'Content File Name #3', footer: 'Written by Joao Dias in xyz2'},
                 {header: 'Content File Name #4', footer: 'Written by Joao Dias in xyz3'}
             ],
-            showContent: { value: false },
+            showContent: { value: true },
             showConfiguration: { value: false },
             showContentEditor: { value: false },
             source: { value: "# My awesome markdown" },
@@ -45,14 +45,14 @@ class App extends Component{
         }
     }
     setMenuItem(activeMenuItem){
-        if (activeMenuItem.value === 'Website Content') {
+        if (activeMenuItem.value === 'Page Content') {
             // TODO: fetch content from server
             // TODO: throw notifictions on errors
             // Hide configuration and show content
             this.setShowConfiguration(false);
             this.setShowContentEditor(false);
             this.setShowContent(true);
-        } else if (activeMenuItem.value === 'Website Configuration') {
+        } else if (activeMenuItem.value === 'Page Configuration') {
             // TODO: fetch configuration from server
             // TODO: throw notifictions on errors
             // Hide content and show configuration
@@ -74,9 +74,9 @@ class App extends Component{
 
         // Test Case
         //
-        // if (repositoryName === "Repository #1") {
-        //     repositoryIsValid = false;
-        // }
+        if (repositoryName === "Repository #1") {
+            repositoryIsValid.value = false;
+        }
         this.setState({repositoryIsValid});
     }
     setContentElements(contentElement){
