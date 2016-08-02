@@ -6,8 +6,8 @@ class MainSection extends Component{
     render(){
         return(
             <div id="main-section">
-                { this.props.showContent.value === true ? <ContentList {...this.props}/> : null }
-                { this.props.showContentEditor.value === true ? <ContentEditor {...this.props}/> : null }
+                { (this.props.showContent.value === true && this.props.repositoryIsValid.value === true) ? <ContentList {...this.props}/> : null }
+                { (this.props.showContentEditor.value === true && this.props.repositoryIsValid.value === true) ? <ContentEditor {...this.props}/> : null }
             </div>
         )
     }
@@ -22,7 +22,8 @@ MainSection.propTypes = {
     source: React.PropTypes.object.isRequired,
     setSource: React.PropTypes.func.isRequired,
     fileName: React.PropTypes.object.isRequired,
-    setFileName: React.PropTypes.func.isRequired
+    setFileName: React.PropTypes.func.isRequired,
+    repositoryIsValid: React.PropTypes.object.isRequired
 }
 
 export default MainSection

@@ -6,7 +6,7 @@ class Repository extends Component{
         return (
             <li id="repository-entry">
                 <a>
-                    {repository.value}
+                    {repository.repositoryName}
                 </a>
             </li>
         )

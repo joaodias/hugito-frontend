@@ -7,7 +7,7 @@ class SidebarSection extends Component{
         return(
             <div id="sidebar">
                 <RepositorySection {...this.props}/>
-                <MenuList {...this.props} />
+                { this.props.repositoryIsValid.value === true ? <MenuList {...this.props} /> : null }
                 <img id="sidebar-logo" src="../../images/logo-horizontal.png"></img>
             </div>
         )
@@ -19,7 +19,9 @@ SidebarSection.propTypes = {
     setMenuItem: React.PropTypes.func.isRequired,
     activeMenuItem: React.PropTypes.object.isRequired,
     repositories: React.PropTypes.array.isRequired,
-    setRepository: React.PropTypes.func.isRequired
+    setRepository: React.PropTypes.func.isRequired,
+    validateRepository: React.PropTypes.func.isRequired,
+    repositoryIsValid: React.PropTypes.object.isRequired
 }
 
 export default SidebarSection
