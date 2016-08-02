@@ -4,7 +4,7 @@ import MenuItem from './MenuItem.jsx'
 class MenuList extends Component{
     render(){
         return(
-            <ul id="menu-list"> {
+            <ul className="menu-list"> {
                 this.props.menuItems.map( mitem =>{
                     return <MenuItem
                         menuItem={mitem}
