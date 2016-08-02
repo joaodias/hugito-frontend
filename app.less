@@ -30,11 +30,11 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    -webkit-transform: translate(50%, 50%);
-       -moz-transform: translate(50%, 50%);
-        -ms-transform: translate(50%, 50%);
-         -o-transform: translate(50%, 50%);
-            transform: translate(50%, 50%);
+    -webkit-transform: translate(-50%, -50%);
+       -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+         -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
 }
 
 .center-horizontal {
@@ -87,6 +87,7 @@ body {
     font-size: 14px;
     padding: 0px;
     margin: 0px;
+    color: @gray-custom;
 }
 
 #app {
@@ -318,6 +319,25 @@ body {
         }
         #right-label-wrapper {
             left: 50%;
+        }
+    }
+    #welcome{
+        position: absolute;
+        display:table;
+        width: 100%;
+        height: 100%;
+        .centered-text{
+            -webkit-transform: translateY(-@topbar-size / 2);
+               -moz-transform: translateY(-@topbar-size / 2);
+                -ms-transform: translateY(-@topbar-size / 2);
+                 -o-transform: translateY(-@topbar-size / 2);
+                    transform: translateY(-@topbar-size / 2);
+            display:table-cell;
+            vertical-align:middle;
+            text-align:center;
+            h1, h4{
+                color: rgba(36, 46, 65, 0.5);
+            }
         }
     }
 }
