@@ -14,8 +14,8 @@ class UserSection extends Component{
 }
 
 UserSection.propTypes = {
-    userName: React.PropTypes.object.isRequired,
-    setUserName: React.PropTypes.func.isRequired
+    user: React.PropTypes.object.isRequired,
+    setUser: React.PropTypes.func.isRequired
 }
 
 export default UserSection
