@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import SidebarSection from './sidebar/SidebarSection.jsx'
 import TopbarSection from './topbar/TopbarSection.jsx'
 import MainSection from './main/MainSection.jsx'
+import Notifications from './Notifications.jsx'
 
 class App extends Component{
     constructor(props){
@@ -32,16 +33,15 @@ class App extends Component{
                 {header: 'Content File Name #2', footer: 'Written by Joao Dias in xyz1'},
                 {header: 'Content File Name #3', footer: 'Written by Joao Dias in xyz2'},
                 {header: 'Content File Name #4', footer: 'Written by Joao Dias in xyz3'},
-                {header: 'Content File Name #1', footer: 'Written by Joao Dias in xyz'},
-                {header: 'Content File Name #2', footer: 'Written by Joao Dias in xyz1'},
-                {header: 'Content File Name #3', footer: 'Written by Joao Dias in xyz2'},
-                {header: 'Content File Name #4', footer: 'Written by Joao Dias in xyz3'}
             ],
             showContent: { value: true },
             showConfiguration: { value: false },
             showContentEditor: { value: false },
             source: { value: "# My awesome markdown" },
-            fileName: { value: "" }
+            fileName: { value: "" },
+            notification: {
+                isActive: false
+            },
         }
     }
     setMenuItem(activeMenuItem){
@@ -74,10 +74,13 @@ class App extends Component{
 
         // Test Case
         //
-        if (repositoryName === "Repository #1") {
-            repositoryIsValid.value = false;
-        }
-        this.setState({repositoryIsValid});
+        // if (repositoryName === "Repository #1") {
+        //     repositoryIsValid.value = false;
+        //     this.throwNotification(repositoryName + " is not a Valid Hugo Website", false);
+        // } else{
+        //     this.throwNotification(repositoryName + " was Load Successfully", true);
+        // }
+        // this.setState({repositoryIsValid});
     }
     setContentElements(contentElement){
         this.setState({contentElement});
@@ -102,6 +105,19 @@ class App extends Component{
     }
     setFileName(fileName){
         this.setState({fileName});
+    }
+    setNotification(notification){
+        this.setState({notification});
+    }
+    throwNotification(message, isSuccess){
+        const notification = {
+                isActive: true,
+                message: message,
+                dismissAfter: 5000,
+                style: true,
+                isSuccess: isSuccess
+        }
+        this.setNotification(notification);
     }
     render(){
         return (
@@ -135,7 +151,11 @@ class App extends Component{
                     setFileName={this.setFileName.bind(this)}
                     repositoryIsValid={this.state.repositoryIsValid}
                 />
-                </div>
+                <Notifications
+                    notification={this.state.notification}
+                    setNotification={this.setNotification.bind(this)}
+                />
+            </div>
         )
     }
 }
