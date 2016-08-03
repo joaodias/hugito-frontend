@@ -393,3 +393,31 @@ body {
         bottom: 50px;
     }
 }
+
+.notification{
+    padding-left: 10px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 20000000000000000 !important;
+    left: 10px;
+    bottom: 50px;
+    height: 50px !important;
+    font-size: 14px !important;
+    font-family: 'Montserrat Light', arial !important;
+    display: table;
+    min-width: 208px;
+    max-width: 300px;
+    .notification-bar-wrapper{
+        .center-vertical;
+    }
+}
+
+.success-notification{
+    color: @white !important;
+    background-color: rgba(104, 219, 160, 0.9) !important;
+}
+
+.failure-notification{
+    color: @white !important;
+    background-color: rgba(227, 94, 98, 0.9) !important;
+}
