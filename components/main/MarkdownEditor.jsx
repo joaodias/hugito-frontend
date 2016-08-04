@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Markdown from 'react-markdown'
-import Label from 'react-bootstrap/lib/Label.js'
+import { Label } from 'react-bootstrap'
 
 class MarkdownEditor extends Component {
     onChange(e){
