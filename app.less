@@ -191,6 +191,10 @@ body {
         .center-vertical;
         left: 300px;
         width: 100%;
+        .btn{
+            .normal-button-style;
+            outline: 0;
+        }
         #content-editor-controls{
             position: relative;
             list-style-type: none;
@@ -203,7 +207,6 @@ body {
                 padding-right: 14px;
                 .btn{
                     margin-top: 2.5px;
-                    .normal-button-style;
                 }
             }
         }
@@ -420,4 +423,15 @@ body {
 .failure-notification{
     color: @white !important;
     background-color: rgba(227, 94, 98, 0.9) !important;
+}
+
+.custom-modal {
+    .center;
+    left: 35%;
+    top: 35%;
+    -webkit-transform: translate(-300px, 87px);
+       -moz-transform: translate(-300px, 87px);
+        -ms-transform: translate(-300px, 87px);
+         -o-transform: translate(-300px, 87px);
+            transform: translate(-300px, 87px);
 }
