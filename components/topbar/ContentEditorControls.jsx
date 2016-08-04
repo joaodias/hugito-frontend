@@ -1,6 +1,6 @@
-import React, {Component}from 'react'
-import Button from 'react-bootstrap/lib/Button.js'
-import Glyphicon from 'react-bootstrap/lib/Glyphicon.js'
+import React, { Component }from 'react'
+import { Button } from 'react-bootstrap'
+import { Glyphicon } from 'react-bootstrap'
 
 class ContentEditorControls extends Component{
     render(){

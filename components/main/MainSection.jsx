@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import ContentList from './ContentList.jsx'
 import ContentEditor from './ContentEditor.jsx'
 import Welcome from './Welcome.jsx'
@@ -25,7 +25,8 @@ MainSection.propTypes = {
     setSource: React.PropTypes.func.isRequired,
     fileName: React.PropTypes.object.isRequired,
     setFileName: React.PropTypes.func.isRequired,
-    repositoryIsValid: React.PropTypes.object.isRequired
+    repositoryIsValid: React.PropTypes.object.isRequired,
+    removeContentFile: React.PropTypes.func.isRequired
 }
 
 export default MainSection

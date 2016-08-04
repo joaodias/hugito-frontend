@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import UserSection from './UserSection.jsx';
 import ControlSection from './ControlSection.jsx'
 
@@ -19,7 +19,8 @@ TopbarSection.propTypes = {
     showContent: React.PropTypes.object.isRequired,
     showContentEditor: React.PropTypes.object.isRequired,
     fileName: React.PropTypes.object.isRequired,
-    repositoryIsValid: React.PropTypes.object.isRequired
+    repositoryIsValid: React.PropTypes.object.isRequired,
+    setModal: React.PropTypes.func.isRequired
 }
 
 export default TopbarSection

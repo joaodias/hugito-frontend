@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Notification } from 'react-notification'
 
-class Notifications extends Component {
+class NotificationWrapper extends Component {
     onDismiss(){
         const { notification, setNotification } = this.props;
         notification.isActive = false;
@@ -23,9 +23,9 @@ class Notifications extends Component {
     }
 }
 
-Notifications.propTypes = {
+NotificationWrapper.propTypes = {
     notification: React.PropTypes.object.isRequired,
     setNotification: React.PropTypes.func.isRequired
 };
 
-export default Notifications
+export default NotificationWrapper

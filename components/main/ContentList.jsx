@@ -1,13 +1,13 @@
-import React, {Component} from 'react'
-import ListGroup from 'react-bootstrap/lib/ListGroup.js'
-import ListItem from './ListItem.jsx'
+import React, { Component } from 'react'
+import { ListGroup } from 'react-bootstrap'
+import ContentListItem from './ContentListItem.jsx'
 
 class ContentList extends Component{
     render(){
         return(
             <ListGroup id="content-list">{
                 this.props.contentElements.map( element =>{
-                    return <ListItem
+                    return <ContentListItem
                         contentElement={element}
                         key={element.id}
                         {...this.props}
@@ -24,7 +24,8 @@ ContentList.propTypes = {
     showContentEditor: React.PropTypes.object.isRequired,
     setShowContentEditor: React.PropTypes.func.isRequired,
     fileName: React.PropTypes.object.isRequired,
-    setFileName: React.PropTypes.func.isRequired
+    setFileName: React.PropTypes.func.isRequired,
+    removeContentFile: React.PropTypes.func.isRequired
 }
 
 export default ContentList

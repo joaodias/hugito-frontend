@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import UserDropdown from './UserDropdown.jsx'
 
 class UserSection extends Component{

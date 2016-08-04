@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import SocialButton from 'react-social-button/lib/SocialButton.js'
+import React, { Component } from 'react'
+import { SocialButton } from 'react-social-button'
 import ReactRouter, { Link } from 'react-router'
 
 class Login extends Component{

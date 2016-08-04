@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton.js';
-import MenuItem from 'react-bootstrap/lib/MenuItem.js'
+import React, { Component } from 'react';
+import { DropdownButton } from 'react-bootstrap';
+import { MenuItem } from 'react-bootstrap'
 
 class UserDropdown extends Component{
     onSelect(value){
