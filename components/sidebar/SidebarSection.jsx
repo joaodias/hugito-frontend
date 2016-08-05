@@ -21,7 +21,10 @@ SidebarSection.propTypes = {
     repositories: React.PropTypes.array.isRequired,
     setRepository: React.PropTypes.func.isRequired,
     validateRepository: React.PropTypes.func.isRequired,
-    repositoryIsValid: React.PropTypes.object.isRequired
+    repositoryIsValid: React.PropTypes.object.isRequired,
+    setShowContent: React.PropTypes.func.isRequired,
+    setShowConfiguration: React.PropTypes.func.isRequired,
+    setShowContentEditor: React.PropTypes.func.isRequired
 }
 
 export default SidebarSection

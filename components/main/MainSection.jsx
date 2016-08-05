@@ -18,12 +18,12 @@ class MainSection extends Component{
 MainSection.propTypes = {
     showContent: React.PropTypes.object.isRequired,
     showContentEditor: React.PropTypes.object.isRequired,
+    setShowContent: React.PropTypes.func.isRequired,
     setShowContentEditor: React.PropTypes.func.isRequired,
     contentElements: React.PropTypes.array.isRequired,
     setContentElements: React.PropTypes.func.isRequired,
     source: React.PropTypes.object.isRequired,
     setSource: React.PropTypes.func.isRequired,
-    fileName: React.PropTypes.object.isRequired,
     setFileName: React.PropTypes.func.isRequired,
     repositoryIsValid: React.PropTypes.object.isRequired,
     removeContentFile: React.PropTypes.func.isRequired

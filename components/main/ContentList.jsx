@@ -21,9 +21,8 @@ class ContentList extends Component{
 ContentList.propTypes = {
     contentElements: React.PropTypes.array.isRequired,
     setContentElements: React.PropTypes.func.isRequired,
-    showContentEditor: React.PropTypes.object.isRequired,
+    setShowContent: React.PropTypes.func.isRequired,
     setShowContentEditor: React.PropTypes.func.isRequired,
-    fileName: React.PropTypes.object.isRequired,
     setFileName: React.PropTypes.func.isRequired,
     removeContentFile: React.PropTypes.func.isRequired
 }
