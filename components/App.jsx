@@ -59,28 +59,37 @@ class App extends Component{
         }
     }
     setMenuItem(activeMenuItem){
-        if (activeMenuItem.value === 'Page Content') {
-            // TODO: fetch content from server
-            // TODO: throw notifictions on errors
-            // Hide configuration and show content
-            this.setShowConfiguration(false);
-            this.setShowContentEditor(false);
-            this.setShowContent(true);
-        } else if (activeMenuItem.value === 'Page Configuration') {
-            // TODO: fetch configuration from server
-            // TODO: throw notifictions on errors
-            // Hide content and show configuration
-            this.setShowContent(false);
-            this.setShowContentEditor(false);
-            this.setShowConfiguration(true);
-        }
         this.setState({activeMenuItem});
+    }
+    setShowConfiguration(showConfiguration){
+        this.setState({showConfiguration});
+    }
+    setShowContent(showContent){
+        this.setState({showContent});
+    }
+    setContentElements(contentElement){
+        this.setState({contentElement});
+    }
+    setShowContentEditor(showContentEditor){
+        this.setState({showContentEditor});
+    }
+    setFileName(fileName){
+        this.setState({fileName});
+    }
+    setSource(source){
+        this.setState({source});
     }
     setUser(user){
         this.setState({user});
     }
     setRepository(repository){
         this.setState({repository});
+    }
+    setNotification(notification){
+        this.setState({notification});
+    }
+    setModal(modal){
+        this.setState({modal})
     }
     validateRepository(repositoryName){
         // TODO: ask the server if the repository is valid
@@ -96,24 +105,6 @@ class App extends Component{
         // }
         this.setState({repositoryIsValid});
     }
-    setContentElements(contentElement){
-        this.setState({contentElement});
-    }
-    setShowContent(value){
-        this.state.showContent.value = value;
-    }
-    setShowConfiguration(value){
-        this.state.showConfiguration.value = value;
-    }
-    setShowContentEditor(showContentEditor){
-        // TODO: fetch the content markdown
-        // Hide content list and display the editor
-        // this.setShowConfiguration(false);
-        // this.setShowContent(false);
-        this.state.showContentEditor.value = showContentEditor.value;
-        this.forceUpdate();
-        this.setShowContent(false);
-    }
     removeContentFile(contentElement){
         // TODO: tell the server to remove file an wait for response
         // The response is either an error or an acknowledgement
@@ -125,15 +116,6 @@ class App extends Component{
             }
         }
     }
-    setSource(source){
-        this.setState({source});
-    }
-    setFileName(fileName){
-        this.setState({fileName});
-    }
-    setNotification(notification){
-        this.setState({notification});
-    }
     throwNotification(message, isSuccess){
         const notification = {
                 isActive: true,
@@ -144,14 +126,11 @@ class App extends Component{
         }
         this.setNotification(notification);
     }
-    setModal(modal){
-        this.setState({modal})
-    }
     saveModal(fieldValues){
         // TODO: notify server with the new file and notify the user with a response. Server will return an error or a content object. In this content object, the author and date fields are defined by the server.
         const content = {
             header: fieldValues.value,
-            author: 'Joao',
+            author: this.state.user.name,
             date: 'some date'
         }
         this.state.contentElements.push(content);
@@ -167,6 +146,8 @@ class App extends Component{
                     fileName={this.state.fileName}
                     repositoryIsValid={this.state.repositoryIsValid}
                     setModal={this.setModal.bind(this)}
+                    setShowContent={this.setShowContent.bind(this)}
+                    setShowContentEditor={this.setShowContentEditor.bind(this)}
                 />
                 <SidebarSection
                     menuItems={this.state.menuItems}
@@ -176,10 +157,14 @@ class App extends Component{
                     setRepository={this.setRepository.bind(this)}
                     validateRepository={this.validateRepository.bind(this)}
                     repositoryIsValid={this.state.repositoryIsValid}
+                    setShowContent={this.setShowContent.bind(this)}
+                    setShowConfiguration={this.setShowConfiguration.bind(this)}
+                    setShowContentEditor={this.setShowContentEditor.bind(this)}
                 />
                 <MainSection
                     showContent={this.state.showContent}
                     showContentEditor={this.state.showContentEditor}
+                    setShowContent={this.setShowContent.bind(this)}
                     setShowContentEditor={this.setShowContentEditor.bind(this)}
                     contentElements={this.state.contentElements}
                     setContentElements={this.setContentElements.bind(this)}

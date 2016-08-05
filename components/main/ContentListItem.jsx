@@ -17,11 +17,11 @@ class ContentListItem extends Component{
         return result;
     }
     editContentFile(){
-        const {setShowContentEditor, showContent, fileName, setFileName, contentElement} = this.props;
-        showContent.value = true;
-        setShowContentEditor(showContent);
-        fileName.value = contentElement.header;
-        setFileName(fileName);
+        const {setShowContent, setShowContentEditor, setFileName, contentElement} = this.props;
+
+        setShowContent({value: false});
+        setShowContentEditor({value: true});
+        setFileName({value: contentElement.header});
     }
     render(){
         return(
@@ -36,9 +36,8 @@ class ContentListItem extends Component{
 ContentListItem.propTypes = {
     contentElement: React.PropTypes.object.isRequired,
     setContentElements: React.PropTypes.func.isRequired,
-    showContentEditor: React.PropTypes.object.isRequired,
+    setShowContent: React.PropTypes.func.isRequired,
     setShowContentEditor: React.PropTypes.func.isRequired,
-    fileName: React.PropTypes.object.isRequired,
     setFileName: React.PropTypes.func.isRequired,
     removeContentFile: React.PropTypes.func.isRequired
 }

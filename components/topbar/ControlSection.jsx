@@ -17,7 +17,9 @@ ControlSection.propTypes = {
     showContent: React.PropTypes.object.isRequired,
     showContentEditor: React.PropTypes.object.isRequired,
     fileName: React.PropTypes.object.isRequired,
-    setModal: React.PropTypes.func.isRequired
+    setModal: React.PropTypes.func.isRequired,
+    setShowContent: React.PropTypes.func.isRequired,
+    setShowContentEditor: React.PropTypes.func.isRequired
 }
 
 export default ControlSection
