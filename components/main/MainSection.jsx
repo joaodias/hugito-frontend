@@ -7,26 +7,26 @@ class MainSection extends Component{
     render(){
         return(
             <div id="main-section">
-                { (this.props.showContent.value === true && this.props.repositoryIsValid.value === true) ? <ContentList {...this.props}/> : null }
-                { (this.props.showContentEditor.value === true && this.props.repositoryIsValid.value === true) ? <ContentEditor {...this.props}/> : null }
-                { this.props.repositoryIsValid.value === false ? <Welcome /> : null }
+                { (this.props.showContent === true && this.props.repositoryIsValid === true) ? <ContentList {...this.props}/> : null }
+                { (this.props.showContentEditor === true && this.props.repositoryIsValid === true) ? <ContentEditor {...this.props}/> : null }
+                { this.props.repositoryIsValid === false ? <Welcome /> : null }
             </div>
         )
     }
 }
 
 MainSection.propTypes = {
-    showContent: React.PropTypes.object.isRequired,
-    showContentEditor: React.PropTypes.object.isRequired,
+    showContent: React.PropTypes.bool.isRequired,
+    showContentEditor: React.PropTypes.bool.isRequired,
     setShowContent: React.PropTypes.func.isRequired,
     setShowContentEditor: React.PropTypes.func.isRequired,
     contentElements: React.PropTypes.array.isRequired,
     setContentElements: React.PropTypes.func.isRequired,
-    source: React.PropTypes.object.isRequired,
-    setSource: React.PropTypes.func.isRequired,
     setFileName: React.PropTypes.func.isRequired,
-    repositoryIsValid: React.PropTypes.object.isRequired,
-    removeContentFile: React.PropTypes.func.isRequired
+    repositoryIsValid: React.PropTypes.bool.isRequired,
+    removeContent: React.PropTypes.func.isRequired,
+    currentEditingContentElement: React.PropTypes.object.isRequired,
+    setCurrentEditingContent: React.PropTypes.func.isRequired
 }
 
 export default MainSection

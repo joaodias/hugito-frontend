@@ -3,11 +3,17 @@ import Markdown from 'react-markdown'
 import { Label } from 'react-bootstrap'
 
 class MarkdownEditor extends Component {
+    constructor(props){
+        super(props);
+        const {contentElement} = this.props;
+        this.state = {
+            source: contentElement.source
+        }
+    }
     onChange(e){
         e.preventDefault();
-        const {source, setSource} = this.props;
-        source.value = e.target.value;
-        setSource(source);
+        const source = e.target.value;
+        this.setState({source});
     }
     render() {
         return (
@@ -17,7 +23,7 @@ class MarkdownEditor extends Component {
                 </div>
                 <textarea
                     className="editor"
-                    defaultValue="# My awesome markdown"
+                    defaultValue={this.state.source}
                     onChange={this.onChange.bind(this)}
                 />
                 <div id="split-line"></div>
@@ -26,7 +32,7 @@ class MarkdownEditor extends Component {
                 </div>
                 <Markdown
                     className="preview pre-scrollable"
-                    source={this.props.source.value}
+                    source={this.state.source}
                     escapeHtml
                 />
             </div>
@@ -35,8 +41,7 @@ class MarkdownEditor extends Component {
 }
 
 MarkdownEditor.propTypes = {
-    source: React.PropTypes.object.isRequired,
-    setSource: React.PropTypes.func.isRequired
+    contentElement: React.PropTypes.object.isRequired
 }
 
 export default MarkdownEditor

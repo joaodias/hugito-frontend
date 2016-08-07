@@ -24,7 +24,8 @@ ContentList.propTypes = {
     setShowContent: React.PropTypes.func.isRequired,
     setShowContentEditor: React.PropTypes.func.isRequired,
     setFileName: React.PropTypes.func.isRequired,
-    removeContentFile: React.PropTypes.func.isRequired
+    removeContent: React.PropTypes.func.isRequired,
+    setCurrentEditingContent: React.PropTypes.func.isRequired
 }
 
 export default ContentList

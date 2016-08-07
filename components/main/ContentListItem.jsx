@@ -9,7 +9,7 @@ class ContentListItem extends Component{
         if (this.checkString(e.target.getAttribute("class"), "list-group-item")) {
             this.editContentFile();
         } else {
-            this.props.removeContentFile(this.props.contentElement);
+            this.props.removeContent(this.props.contentElement);
         }
     }
     checkString(mainString, subString){
@@ -17,11 +17,12 @@ class ContentListItem extends Component{
         return result;
     }
     editContentFile(){
-        const {setShowContent, setShowContentEditor, setFileName, contentElement} = this.props;
+        const {setShowContent, setShowContentEditor, setFileName, contentElement, setCurrentEditingContent} = this.props;
 
-        setShowContent({value: false});
-        setShowContentEditor({value: true});
-        setFileName({value: contentElement.header});
+        setShowContent(false);
+        setShowContentEditor(true);
+        setFileName(contentElement.header);
+        setCurrentEditingContent(contentElement);
     }
     render(){
         return(
@@ -39,7 +40,8 @@ ContentListItem.propTypes = {
     setShowContent: React.PropTypes.func.isRequired,
     setShowContentEditor: React.PropTypes.func.isRequired,
     setFileName: React.PropTypes.func.isRequired,
-    removeContentFile: React.PropTypes.func.isRequired
+    removeContent: React.PropTypes.func.isRequired,
+    setCurrentEditingContent: React.PropTypes.func.isRequired
 }
 
 export default ContentListItem

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { SocialButton } from 'react-social-button'
-import ReactRouter, { Link } from 'react-router'
+import { Link } from 'react-router'
 
 class Login extends Component{
     render(){

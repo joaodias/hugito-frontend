@@ -103,7 +103,6 @@ class App extends Component{
         this.setState({contentElement});
     }
     setCurrentEditingContent(currentEditingContentElement){
-        console.log(currentEditingContentElement);
         this.setState({currentEditingContentElement});
     }
     setShowContentEditor(showContentEditor){
@@ -139,7 +138,6 @@ class App extends Component{
         this.setState({repositories});
     }
     onRepositoryValidation(repositoryIsValid){
-        console.log(repositoryIsValid);
         if (!repositoryIsValid) {
             this.throwNotification("The selected repository is not valid", false);
         } else {

@@ -7,7 +7,7 @@ class TopbarSection extends Component{
         return(
             <div id="topbar">
                 <UserSection {...this.props}/>
-                { this.props.repositoryIsValid.value === true ? <ControlSection {...this.props}/> : null }
+                { this.props.repositoryIsValid === true ? <ControlSection {...this.props}/> : null }
             </div>
         )
     }
@@ -16,10 +16,10 @@ class TopbarSection extends Component{
 TopbarSection.propTypes = {
     user: React.PropTypes.object.isRequired,
     setUser: React.PropTypes.func.isRequired,
-    showContent: React.PropTypes.object.isRequired,
-    showContentEditor: React.PropTypes.object.isRequired,
-    fileName: React.PropTypes.object.isRequired,
-    repositoryIsValid: React.PropTypes.object.isRequired,
+    showContent: React.PropTypes.bool.isRequired,
+    showContentEditor: React.PropTypes.bool.isRequired,
+    fileName: React.PropTypes.string.isRequired,
+    repositoryIsValid: React.PropTypes.bool.isRequired,
     setModal: React.PropTypes.func.isRequired,
     setShowContent: React.PropTypes.func.isRequired,
     setShowContentEditor: React.PropTypes.func.isRequired
