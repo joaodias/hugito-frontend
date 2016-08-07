@@ -4,6 +4,7 @@ import TopbarSection from './topbar/TopbarSection.jsx'
 import MainSection from './main/MainSection.jsx'
 import NotificationWrapper from './NotificationWrapper.jsx'
 import ModalWrapper from './ModalWrapper.jsx'
+import Socket from '../socket.js';
 
 class App extends Component{
     constructor(props){
@@ -14,32 +15,32 @@ class App extends Component{
                 {value: 'Page Configuration'},
                 {value: 'Page Content'}
             ],
-            activeMenuItem: {value: 'Page Content'},
+            activeMenuItem: 'Page Content',
             repositories: [
                 {repositoryName: 'Repository #1'},
                 {repositoryName: 'Repository #2'},
                 {repositoryName: 'Repository #3'}
             ],
-            repositoryIsValid: {value: false},
+            repositoryIsValid: false,
             contentElements: [
-                {header: 'Content Name #1', author: 'Joao Dias', date: "whateva"},
-                {header: 'Content Name #2', author: 'Joao Dias', date: "whateva"},
-                {header: 'Content Name #3', author: 'Joao Dias', date: "whateva"},
-                {header: 'Content Name #4', author: 'Joao Dias', date: "whateva"},
-                {header: 'Content Name #1', author: 'Joao Dias', date: "whateva"},
-                {header: 'Content Name #2', author: 'Joao Dias', date: "whateva"},
-                {header: 'Content Name #3', author: 'Joao Dias', date: "whateva"},
-                {header: 'Content Name #4', author: 'Joao Dias', date: "whateva"},
-                {header: 'Content Name #1', author: 'Joao Dias', date: "whateva"},
-                {header: 'Content Name #2', author: 'Joao Dias', date: "whateva"},
-                {header: 'Content Name #3', author: 'Joao Dias', date: "whateva"},
-                {header: 'Content Name #4', author: 'Joao Dias', date: "whateva"},
+                {header: 'Content Name #1', author: 'Joao Dias', date: "whateva", source: "## Content Name #1"},
+                {header: 'Content Name #2', author: 'Joao Dias', date: "whateva", source: "## Content Name #2"},
+                {header: 'Content Name #3', author: 'Joao Dias', date: "whateva", source: "## Content Name #3"},
+                {header: 'Content Name #4', author: 'Joao Dias', date: "whateva", source: ""},
+                {header: 'Content Name #1', author: 'Joao Dias', date: "whateva", source: ""},
+                {header: 'Content Name #2', author: 'Joao Dias', date: "whateva", source: ""},
+                {header: 'Content Name #3', author: 'Joao Dias', date: "whateva", source: ""},
+                {header: 'Content Name #4', author: 'Joao Dias', date: "whateva", source: ""},
+                {header: 'Content Name #1', author: 'Joao Dias', date: "whateva", source: ""},
+                {header: 'Content Name #2', author: 'Joao Dias', date: "whateva", source: ""},
+                {header: 'Content Name #3', author: 'Joao Dias', date: "whateva", source: ""},
+                {header: 'Content Name #4', author: 'Joao Dias', date: "whateva", source: ""},
             ],
-            showContent: { value: true },
-            showConfiguration: { value: false },
-            showContentEditor: { value: false },
-            source: { value: "# My awesome markdown" },
-            fileName: { value: "" },
+            currentEditingContentElement: {},
+            showContent: true,
+            showConfiguration: false,
+            showContentEditor: false,
+            fileName: '',
             notification: {
                 isActive: false,
                 message: "",
@@ -55,8 +56,32 @@ class App extends Component{
                 ],
                 closeButton: "",
                 saveButton: ""
-            }
+            },
+            connected: false,
+            loggedIn: true
         }
+    }
+    componentDidMount() {
+        let ws = new WebSocket('ws://echo.websocket.org');
+        let socket = this.socket = new Socket(ws);
+        socket.on('connect', this.onConnect.bind(this));
+        socket.on('disconnect', this.onDisconnect.bind(this));
+        socket.on('repository add', this.onAddRepository);
+        socket.on('repository remove', this.onRemoveRepository);
+        socket.on('repository validate', this.onRepositoryValidation.bind(this));
+        socket.on('content add', this.onAddContent.bind(this));
+        socket.on('content remove', this.onRemoveContent.bind(this));
+        socket.on('content update', this.onUpdateContent.bind(this));
+    }
+    onConnect(){
+        this.setState({connected: true});
+        this.socket.emit('repository subscribe');
+        this.socket.emit('content subscribe');
+        this.socket.emit('configuration subscribe');
+        this.socket.emit('user subscribe');
+    }
+    onDisconnect(){
+        this.setState({connected: false});
     }
     setMenuItem(activeMenuItem){
         this.setState({activeMenuItem});
@@ -70,14 +95,15 @@ class App extends Component{
     setContentElements(contentElement){
         this.setState({contentElement});
     }
+    setCurrentEditingContent(currentEditingContentElement){
+        console.log(currentEditingContentElement);
+        this.setState({currentEditingContentElement});
+    }
     setShowContentEditor(showContentEditor){
         this.setState({showContentEditor});
     }
     setFileName(fileName){
         this.setState({fileName});
-    }
-    setSource(source){
-        this.setState({source});
     }
     setUser(user){
         this.setState({user});
@@ -91,26 +117,58 @@ class App extends Component{
     setModal(modal){
         this.setState({modal})
     }
-    validateRepository(repositoryName){
-        // TODO: ask the server if the repository is valid
-        var repositoryIsValid = {value: true};
+    onRemoveRepository(repository){
+        for (var i = 0; i < this.state.repositories.length; i++) {
+            if (this.state.repositories[i] === repository) {
+                this.state.repositories.splice(i, 1);
+                this.setContentElements(this.state.repositories);
+                return;
+            }
+        }
+    }
+    onAddRepository(repository){
+        let {repositories} = this.state;
+        repositories.push(repository);
+        this.setState({repositories});
+    }
+    onRepositoryValidation(repositoryIsValid){
+        // Dummy
+        repositoryIsValid = true;
 
-        // Test Case
-        //
-        // if (repositoryName === "Repository #1") {
-        //     repositoryIsValid.value = false;
-        //     this.throwNotification(repositoryName + " is not a Valid Hugo Website", false);
-        // } else{
-        //     this.throwNotification(repositoryName + " was Load Successfully", true);
-        // }
         this.setState({repositoryIsValid});
     }
-    removeContentFile(contentElement){
-        // TODO: tell the server to remove file an wait for response
-        // The response is either an error or an acknowledgement
+    validateRepository(repositoryName){
+        this.socket.emit('repository validate', repositoryName);
+    }
+    onRemoveContent(contentElement){
         for (var i = 0; i < this.state.contentElements.length; i++) {
             if (this.state.contentElements[i] === contentElement) {
                 this.state.contentElements.splice(i, 1);
+                this.setContentElements(this.state.contentElement);
+                return;
+            }
+        }
+    }
+    removeContent(contentElement){
+        this.socket.emit('content remove', contentElement);
+    }
+    onAddContent(contentElement){
+        let {contentElements} = this.state;
+        contentElements.push(contentElement);
+        this.setState({contentElements});
+    }
+    addContent(fileName){
+        const data = {
+            header: fileName,
+            author: this.state.user.name,
+            date: 'some date'
+        }
+        this.socket.emit('content add', data);
+    }
+    onUpdateContent(contentElement){
+        for (var i = 0; i < this.state.contentElements.length; i++) {
+            if (this.state.contentElements[i] === contentElement) {
+                this.state.contentElements[i] === contentElement;
                 this.setContentElements(this.state.contentElement);
                 return;
             }
@@ -125,15 +183,6 @@ class App extends Component{
                 isSuccess: isSuccess
         }
         this.setNotification(notification);
-    }
-    saveModal(fieldValues){
-        // TODO: notify server with the new file and notify the user with a response. Server will return an error or a content object. In this content object, the author and date fields are defined by the server.
-        const content = {
-            header: fieldValues.value,
-            author: this.state.user.name,
-            date: 'some date'
-        }
-        this.state.contentElements.push(content);
     }
     render(){
         return (
@@ -168,12 +217,11 @@ class App extends Component{
                     setShowContentEditor={this.setShowContentEditor.bind(this)}
                     contentElements={this.state.contentElements}
                     setContentElements={this.setContentElements.bind(this)}
-                    source={this.state.source}
-                    setSource={this.setSource.bind(this)}
-                    fileName={this.state.fileName}
                     setFileName={this.setFileName.bind(this)}
                     repositoryIsValid={this.state.repositoryIsValid}
-                    removeContentFile={this.removeContentFile.bind(this)}
+                    removeContent={this.removeContent.bind(this)}
+                    setCurrentEditingContent={this.setCurrentEditingContent.bind(this)}
+                    currentEditingContentElement={this.state.currentEditingContentElement}
                 />
                 <NotificationWrapper
                     notification={this.state.notification}
@@ -182,7 +230,7 @@ class App extends Component{
                 <ModalWrapper
                     modal={this.state.modal}
                     setModal={this.setModal.bind(this)}
-                    saveModal={this.saveModal.bind(this)}
+                    addContent={this.addContent.bind(this)}
                 />
             </div>
         )
