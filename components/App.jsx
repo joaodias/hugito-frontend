@@ -12,7 +12,6 @@ class App extends Component{
         this.state = {
             user: {name: 'Joao Dias'},
             menuItems: [
-                {value: 'Page Configuration'},
                 {value: 'Page Content'}
             ],
             activeMenuItem: 'Page Content',
@@ -62,16 +61,24 @@ class App extends Component{
         }
     }
     componentDidMount() {
-        let ws = new WebSocket('ws://echo.websocket.org');
+        let ws = new WebSocket('ws://localhost:4000');
         let socket = this.socket = new Socket(ws);
         socket.on('connect', this.onConnect.bind(this));
         socket.on('disconnect', this.onDisconnect.bind(this));
+
         socket.on('repository add', this.onAddRepository);
         socket.on('repository remove', this.onRemoveRepository);
         socket.on('repository validate', this.onRepositoryValidation.bind(this));
+
         socket.on('content add', this.onAddContent.bind(this));
         socket.on('content remove', this.onRemoveContent.bind(this));
         socket.on('content update', this.onUpdateContent.bind(this));
+
+        socket.on('configuration add', this.onAddConfiguration.bind(this))
+        socket.on('configuration remove', this.onRemoveConfiguration.bind(this))
+        socket.on('configuration update', this.onUpdateConfiguration.bind(this))
+
+        socket.on('user set', this.onSetUser.bind(this));
     }
     onConnect(){
         this.setState({connected: true});
@@ -132,10 +139,13 @@ class App extends Component{
         this.setState({repositories});
     }
     onRepositoryValidation(repositoryIsValid){
-        // Dummy
-        repositoryIsValid = true;
-
-        this.setState({repositoryIsValid});
+        console.log(repositoryIsValid);
+        if (!repositoryIsValid) {
+            this.throwNotification("The selected repository is not valid", false);
+        } else {
+            this.setState({repositoryIsValid});
+            this.throwNotification("The selected repository was fetched successfully", true);
+        }
     }
     validateRepository(repositoryName){
         this.socket.emit('repository validate', repositoryName);
@@ -173,6 +183,18 @@ class App extends Component{
                 return;
             }
         }
+    }
+    onAddConfiguration(){
+        // TODO: implement
+    }
+    onRemoveConfiguration(){
+        // TODO: implement
+    }
+    onUpdateConfiguration(){
+        // TODO: implement
+    }
+    onSetUser(user){
+        this.setState({user});
     }
     throwNotification(message, isSuccess){
         const notification = {
