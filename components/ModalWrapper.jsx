@@ -25,7 +25,7 @@ class ModalWrapper extends Component {
         this.setState({fieldValues});
     }
     onSave(){
-        this.props.saveModal(this.state.fieldValues);
+        this.props.addContent(this.state.fieldValues.value);
         this.onHide();
     }
     onHide(){
@@ -71,7 +71,7 @@ class ModalWrapper extends Component {
 ModalWrapper.propTypes = {
     modal: React.PropTypes.object.isRequired,
     setModal: React.PropTypes.func.isRequired,
-    saveModal: React.PropTypes.func.isRequired
+    addContent: React.PropTypes.func.isRequired
 }
 
 export default ModalWrapper

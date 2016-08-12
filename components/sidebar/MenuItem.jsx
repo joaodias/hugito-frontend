@@ -9,29 +9,29 @@ class MenuItem extends Component{
     }
     handleMainContentDisplay(menuItem){
         const {setShowConfiguration, setShowContent, setShowContentEditor} = this.props;
-        if (menuItem.value === 'Page Content') {
+        if (menuItem === 'Page Content') {
             // TODO: fetch content from server
             // TODO: throw notifictions on errors
             // Hide configuration and show content
-            setShowConfiguration({value: false});
-            setShowContentEditor({value: false});
-            setShowContent({value: true});
-        } else if (menuItem.value === 'Page Configuration') {
+            setShowConfiguration(false);
+            setShowContentEditor(false);
+            setShowContent(true);
+        } else if (menuItem === 'Page Configuration') {
             // TODO: fetch configuration from server
             // TODO: throw notifictions on errors
             // Hide content and show configuration
-            setShowContent({value: false});
-            setShowContentEditor({value: false});
-            setShowConfiguration({value: true});
+            setShowContent(false);
+            setShowContentEditor(false);
+            setShowConfiguration(true);
         }
     }
     render(){
         const {menuItem, activeMenuItem} = this.props;
-        const active = menuItem.value === activeMenuItem.value ? 'active-menu-item' : '';
+        const active = menuItem === activeMenuItem ? 'active-menu-item menu-item' : 'menu-item';
         return (
-            <li id="menu-item" className={active}>
+            <li className={active}>
                 <a onClick={this.onClick.bind(this)}>
-                    {menuItem.value}
+                    {menuItem}
                 </a>
             </li>
         )
@@ -39,9 +39,9 @@ class MenuItem extends Component{
 }
 
 MenuItem.propTypes = {
-    menuItem: React.PropTypes.object.isRequired,
+    menuItem: React.PropTypes.string.isRequired,
     setMenuItem: React.PropTypes.func.isRequired,
-    activeMenuItem: React.PropTypes.object.isRequired,
+    activeMenuItem: React.PropTypes.string.isRequired,
     setShowContent: React.PropTypes.func.isRequired,
     setShowConfiguration: React.PropTypes.func.isRequired,
     setShowContentEditor: React.PropTypes.func.isRequired

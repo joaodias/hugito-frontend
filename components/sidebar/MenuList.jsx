@@ -7,7 +7,7 @@ class MenuList extends Component{
             <ul className="menu-list"> {
                 this.props.menuItems.map( mitem =>{
                     return <MenuItem
-                        menuItem={mitem}
+                        menuItem={mitem.value}
                         key={mitem.id}
                         {...this.props}
                     />
@@ -20,7 +20,7 @@ class MenuList extends Component{
 MenuList.propTypes = {
     menuItems: React.PropTypes.array.isRequired,
     setMenuItem: React.PropTypes.func.isRequired,
-    activeMenuItem: React.PropTypes.object.isRequired,
+    activeMenuItem: React.PropTypes.string.isRequired,
     setShowContent: React.PropTypes.func.isRequired,
     setShowConfiguration: React.PropTypes.func.isRequired,
     setShowContentEditor: React.PropTypes.func.isRequired
