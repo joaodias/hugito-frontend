@@ -1,15 +1,11 @@
 jest.disableAutomock();
-jest.mock('ws');
-
-import WebSocket from 'ws';
 
 import Authentication from '../components/utils/Authentication.jsx';
-
-Authentication.prototype.setCode = jest.fn();
 
 describe("Authentication", () => {
 
     let auth;
+    Authentication.prototype._setupWebSocket = jest.fn();
 
     beforeEach(() => {
         auth = new Authentication();
