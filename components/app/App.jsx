@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import SidebarSection from './sidebar/SidebarSection.jsx'
 import TopbarSection from './topbar/TopbarSection.jsx'
 import MainSection from './main/MainSection.jsx'
-import NotificationWrapper from './NotificationWrapper.jsx'
-import ModalWrapper from './ModalWrapper.jsx'
-import Socket from '../socket.js';
+import NotificationWrapper from './pops/NotificationWrapper.jsx'
+import ModalWrapper from './pops/ModalWrapper.jsx'
+import Socket from '../../socket.js';
+
+const CLIENT_DOMAIN = 'http://localhost:8080';
+const SERVER_DOMAIN = 'ws://localhost:4000';
 
 class App extends Component{
     constructor(props){
@@ -61,13 +64,13 @@ class App extends Component{
         }
     }
     componentDidMount() {
-        let ws = new WebSocket('ws://localhost:4000');
+        let ws = new WebSocket(SERVER_DOMAIN);
         let socket = this.socket = new Socket(ws);
         socket.on('connect', this.onConnect.bind(this));
         socket.on('disconnect', this.onDisconnect.bind(this));
 
-        socket.on('repository add', this.onAddRepository);
-        socket.on('repository remove', this.onRemoveRepository);
+        socket.on('repository add', this.onAddRepository.bind(this));
+        socket.on('repository remove', this.onRemoveRepository.bind(this));
         socket.on('repository validate', this.onRepositoryValidation.bind(this));
 
         socket.on('content add', this.onAddContent.bind(this));
@@ -89,6 +92,10 @@ class App extends Component{
     }
     onDisconnect(){
         this.setState({connected: false});
+    }
+    logout(){
+        localStorage.setItem('authentication_authenticated', 'false');
+        window.open(CLIENT_DOMAIN, '_self');
     }
     setMenuItem(activeMenuItem){
         this.setState({activeMenuItem});
@@ -217,6 +224,7 @@ class App extends Component{
                     setModal={this.setModal.bind(this)}
                     setShowContent={this.setShowContent.bind(this)}
                     setShowContentEditor={this.setShowContentEditor.bind(this)}
+                    logout={this.logout.bind(this)}
                 />
                 <SidebarSection
                     menuItems={this.state.menuItems}

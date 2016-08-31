@@ -5,7 +5,12 @@ import { Link } from 'react-router'
 
 class UserDropdown extends Component{
     onSelect(value){
-        // TODO: DO SOMETHING
+        const { logout } = this.props;
+        switch(value) {
+            case 'Logout':
+                logout();
+                break;
+        }
     }
     render(){
         const {user} = this.props;
@@ -25,7 +30,8 @@ class UserDropdown extends Component{
 
 UserDropdown.propTypes = {
     user: React.PropTypes.object.isRequired,
-    setUser: React.PropTypes.func.isRequired
+    setUser: React.PropTypes.func.isRequired,
+    logout: React.PropTypes.func.isRequired
 }
 
 export default UserDropdown
