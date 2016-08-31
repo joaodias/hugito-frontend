@@ -1,4 +1,3 @@
-import WebSocket from 'ws';
 import Socket from '../../socket.js';
 
 const SERVER_DOMAIN = 'ws://localhost:4000';

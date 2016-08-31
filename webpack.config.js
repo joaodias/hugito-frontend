@@ -5,6 +5,7 @@ module.exports = {
         filename: 'bundle.js'
     },
     module: {
+        noParse: ['fs'],
         loaders: [
             {
                 test: /\.jsx?$/,
@@ -24,4 +25,5 @@ module.exports = {
             }
         ]
     }
+    externals: ['ws']
 }
