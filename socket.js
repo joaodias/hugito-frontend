@@ -33,6 +33,9 @@ class Socket {
   close(){
     this.ee.emit('disconnect');
   }
+  getState(){
+    return this.ws.readyState;
+  }
 }
 
 export default Socket;
