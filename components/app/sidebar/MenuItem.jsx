@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 class MenuItem extends Component{
     onClick(e){
@@ -8,21 +8,10 @@ class MenuItem extends Component{
         this.handleMainContentDisplay(menuItem);
     }
     handleMainContentDisplay(menuItem){
-        const {setShowConfiguration, setShowContent, setShowContentEditor} = this.props;
+        const {setShowContent, setShowContentEditor} = this.props;
         if (menuItem === 'Page Content') {
-            // TODO: fetch content from server
-            // TODO: throw notifictions on errors
-            // Hide configuration and show content
-            setShowConfiguration(false);
-            setShowContentEditor(false);
-            setShowContent(true);
-        } else if (menuItem === 'Page Configuration') {
-            // TODO: fetch configuration from server
-            // TODO: throw notifictions on errors
-            // Hide content and show configuration
-            setShowContent(false);
-            setShowContentEditor(false);
-            setShowConfiguration(true);
+            setShowContentEditor('false');
+            setShowContent('true');
         }
     }
     render(){
@@ -43,7 +32,6 @@ MenuItem.propTypes = {
     setMenuItem: React.PropTypes.func.isRequired,
     activeMenuItem: React.PropTypes.string.isRequired,
     setShowContent: React.PropTypes.func.isRequired,
-    setShowConfiguration: React.PropTypes.func.isRequired,
     setShowContentEditor: React.PropTypes.func.isRequired
 }
 

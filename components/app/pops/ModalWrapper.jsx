@@ -1,57 +1,73 @@
-import React, { Component } from 'react'
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, FormControl, Col, ControlLabel } from 'react-bootstrap'
+import React, { Component } from 'react';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, FormControl, Col, ControlLabel, DropdownButton, MenuItem } from 'react-bootstrap';
 
 const dummyHiddenModal = {
-    show: false,
-    title: "",
+    show: 'false',
+    title: '',
     fieldNames: [
-        {value: ""}
+        {value: ''}
     ],
-    closeButton: "",
-    saveButton: ""
+    closeButton: '',
+    saveButton: ''
 }
 
 class ModalWrapper extends Component {
     constructor(props){
         super(props);
         this.state = {
-            fieldValues: [
-                {value: ""}
-            ]
+            value: '',
+            repository: '',
+            branch: ''
         }
     }
     onChange(e){
-        const fieldValues = {value: e.target.value}
-        this.setState({fieldValues});
+        if (e.target.id === 'repositories') {
+            const repository = e.target.value;
+            this.setState({repository});
+        } else if (e.target.id === 'branches') {
+            const branch = e.target.value;
+            this.setState({branch});
+        } else {
+            const value = e.target.value
+            this.setState({value});
+        }
     }
     onSave(){
-        this.props.addContent(this.state.fieldValues.value);
-        this.onHide();
+        const {value, repository, branch} = this.state;
+        const {modal, validateRepository, addContent} = this.props;
+        if (modal.type === 'addRepository') {
+            validateRepository(this.state.repository, this.state.branch);
+            this.onHide();
+        } else if(modal.type === 'addContent') {
+            addContent(value);
+            this.onHide();
+        }
     }
     onHide(){
         this.props.setModal(dummyHiddenModal);
     }
     render() {
+        const {modal} = this.props;
+        const show = (modal.show === 'true');
         return(
             <Modal
-                show={this.props.modal.show}
+                show={show}
                 onHide={this.onHide.bind(this)}
-                dialogClassName="custom-modal"
+                dialogClassName='custom-modal'
             >
                 <ModalHeader closeButton>
-                    <Modal.Title>{this.props.modal.title}</Modal.Title>
+                    <Modal.Title>{modal.title}</Modal.Title>
                 </ModalHeader>
                 <ModalBody>{
-                    this.props.modal.fieldNames.map( field =>{
+                    modal.fieldNames.map( field =>{
                         return (
                             <div>
                                 <Form horizontal>
-                                    <FormGroup controlId="formHorizontalText">
+                                    <FormGroup controlId='formHorizontalText'>
                                       <Col componentClass={ControlLabel} sm={3}>
-                                        Content Title
+                                        {field.value}
                                       </Col>
-                                      <Col sm={9}>
-                                        <FormControl type="text" placeholder="Your Content Title" onChange={this.onChange.bind(this)}/>
+                                      <Col sm={9}><FormControl id={field.type} type='text' placeholder={field.placeholder} onChange={this.onChange.bind(this)} defaultValue={field.default}/>
                                       </Col>
                                     </FormGroup>
                                 </Form>
@@ -60,8 +76,8 @@ class ModalWrapper extends Component {
                     })
                 }</ModalBody>
                 <ModalFooter>
-                    <Button onClick={this.onHide.bind(this)}>{this.props.modal.closeButton}</Button>
-                    <Button onClick={this.onSave.bind(this)} bsStyle="primary">{this.props.modal.saveButton}</Button>
+                    <Button onClick={this.onHide.bind(this)}>{modal.closeButton}</Button>
+                    <Button onClick={this.onSave.bind(this)} bsStyle='primary'>{modal.saveButton}</Button>
                 </ModalFooter>
             </Modal>
         )
@@ -71,7 +87,8 @@ class ModalWrapper extends Component {
 ModalWrapper.propTypes = {
     modal: React.PropTypes.object.isRequired,
     setModal: React.PropTypes.func.isRequired,
-    addContent: React.PropTypes.func.isRequired
+    addContent: React.PropTypes.func.isRequired,
+    validateRepository: React.PropTypes.func.isRequired
 }
 
 export default ModalWrapper

@@ -8,14 +8,14 @@ class Login extends Component{
     render(){
         const { auth, failedLogin } = this.props;
         return(
-            <div id="login-page">
-                <img id="login-logo" src="../images/logo.png"></img>
+            <div id='login-page'>
+                <img id='login-logo' src='../images/logo.png'></img>
                 <GithubLogin auth={auth}></GithubLogin>
                 <h5>Hugito is the CMS that brings you the content and just the content. No garbage attached. It is an open source project that aims to change the way people manage their website's content.</h5>
-                <ul id="login-list">
-                    <li><Link to="/about"> About </Link></li>
-                    <li><Link to="/blog"> Blog </Link></li>
-                    <li><Link to="/terms"> Terms </Link></li>
+                <ul id='login-list'>
+                    <li><Link to='/about'> About </Link></li>
+                    <li><Link to='/blog'> Blog </Link></li>
+                    <li><Link to='/terms'> Terms </Link></li>
                 </ul>
             </div>
         )

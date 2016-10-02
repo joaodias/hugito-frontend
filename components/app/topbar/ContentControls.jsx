@@ -1,15 +1,16 @@
-import React, { Component }from 'react'
-import { Button } from 'react-bootstrap'
-import { Glyphicon } from 'react-bootstrap'
+import React, { Component }from 'react';
+import { Button } from 'react-bootstrap';
+import { Glyphicon } from 'react-bootstrap';
 
 const modal = {
-        show: true,
-        title: "New Content File",
+        show: 'true',
+        title: 'New Content File',
         fieldNames: [
-            {value: "Content Title"}
+            {value: 'Content Title'}
         ],
-        closeButton: "Cancel",
-        saveButton: "Add Content"
+        closeButton: 'Cancel',
+        saveButton: 'Add Content',
+        type: 'addContent'
 }
 
 class ContentControls extends Component{
@@ -19,8 +20,8 @@ class ContentControls extends Component{
     }
     render(){
         return (
-            <div id="content-controls">
-                <Button onClick={this.onClick.bind(this)} bsSize="small" className="btn"><Glyphicon glyph="plus"/> Add Content</Button>
+            <div id='content-controls'>
+                <Button onClick={this.onClick.bind(this)} bsSize='small' className='btn'><Glyphicon glyph='plus'/> Add Content</Button>
             </div>
         )
     }
