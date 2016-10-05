@@ -39,7 +39,6 @@ export default class Authentication {
         }
     }
     _onSetAuthenticated(access_token) {
-        console.log('Access Token: ' + access_token);
         localStorage.setItem('access_token', access_token)
         localStorage.setItem('authentication_authenticated', 'true');
         window.open(CLIENT_DOMAIN, '_self');
@@ -50,7 +49,6 @@ export default class Authentication {
     _getParameterFromUrl(url, target){
         let error = url.match(/[&\?]error=([^&]+)/);
         if (error) {
-            console.log('Error getting ' + target + ': ' + error[1]);
             return null;
         }
         let regex = new RegExp('[&?]' + target + '=([\\w\\/\\-]+)');
