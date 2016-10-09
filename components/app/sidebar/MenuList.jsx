@@ -1,29 +1,35 @@
-import React, {Component} from 'react'
-import MenuItem from './MenuItem.jsx'
+import React, {Component} from 'react';
+import { SideNav } from 'react-sidenav';
 
-class MenuList extends Component{
+class MenuTree extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            selected: ''
+        }
+    }
+    onSelection(selection){
+        // Seems like on selection it is throwing lots of events. So this is a verification to prevent multiple calls to setActiveMenuItem.
+        let {setActiveMenuItem} = this.props;
+        console.log(selection.id, this.state.selected);
+        setActiveMenuItem(selection.id);
+        this.setState({selected: selection.id});
+    }
     render(){
+        let {selected} = this.state;
+        let {treeMenu} = this.props;
         return(
-            <ul className="menu-list"> {
-                this.props.menuItems.map( mitem =>{
-                    return <MenuItem
-                        menuItem={mitem.value}
-                        key={mitem.id}
-                        {...this.props}
-                    />
-                })
-            }</ul>
+            <div className='menu-list'>
+                <SideNav selected={selected} navs={treeMenu} onSelection={this.onSelection.bind(this)}/>
+            </div>
         )
     }
 }
 
-MenuList.propTypes = {
-    menuItems: React.PropTypes.array.isRequired,
-    setMenuItem: React.PropTypes.func.isRequired,
+MenuTree.propTypes = {
+    setActiveMenuItem: React.PropTypes.func.isRequired,
     activeMenuItem: React.PropTypes.string.isRequired,
-    setShowContent: React.PropTypes.func.isRequired,
-    setShowConfiguration: React.PropTypes.func.isRequired,
-    setShowContentEditor: React.PropTypes.func.isRequired
+    treeMenu: React.PropTypes.array.isRequired
 }
 
-export default MenuList
+export default MenuTree

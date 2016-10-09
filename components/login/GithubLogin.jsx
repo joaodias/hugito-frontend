@@ -20,6 +20,7 @@ class GithubLogin extends Component {
             const isLoading = true;
             this.setState({isLoading});
         }
+        console.log('Scopes: ', scope);
         let url = 'https://github.com/login/oauth/authorize' + '?' +
             'client_id=' + clientId + '&' +
             'scope=' + scope + '&' +

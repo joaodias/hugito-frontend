@@ -1,11 +1,10 @@
 module.exports = {
     entry: './index.js',
     output: {
-        path: __dirname,
+        path: './public',
         filename: 'bundle.js'
     },
     module: {
-        noParse: ['fs'],
         loaders: [
             {
                 test: /\.jsx?$/,
@@ -25,5 +24,4 @@ module.exports = {
             }
         ]
     }
-    externals: ['ws']
 }

@@ -99,7 +99,8 @@ describe("Authentication", () => {
     describe("When checking if a user is authenticated", function () {
         describe("and the user is not authenticated", function () {
             it("should return false for isAuthenticated", function () {
-                auth._onSetAuthenticated(false);
+                expect(auth.isAuthenticated()).toBe(false);
+                auth._onError(false);
                 expect(auth.isAuthenticated()).toBe(false);
             });
         });

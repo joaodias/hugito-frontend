@@ -1,14 +1,17 @@
 import Socket from '../../socket.js';
 
 const SERVER_DOMAIN = 'ws://localhost:4000';
-const CLIENT_DOMAIN = 'http://localhost:8080';
+const CLIENT_DOMAIN = 'http://localhost:4001/';
 
 export default class Authentication {
     constructor() {
         this._authentication = {
             clientId: 'ca2048cb35218bb7e36a',
             secret: '829989b4cffd217aa7e51ea16a6a30a363dfac7f',
-            scopes: 'user:e-mail, repo',
+            scopes: [
+                'user:e-mail',
+                'repo'
+            ],
             code: '',
             state: localStorage.getItem('authentication_state'),
             receivedState: '',
@@ -35,19 +38,20 @@ export default class Authentication {
             this._socket.emit('authenticate', this._authentication);
         }
     }
-    _onSetAuthenticated(authenticated) {
-        localStorage.setItem('authentication_authenticated', authenticated);
-        if (authenticated === 'true') {
-            window.open(CLIENT_DOMAIN, '_self');
-        }
+    _onSetAuthenticated(access_token) {
+        localStorage.setItem('access_token', access_token)
+        localStorage.setItem('authentication_authenticated', 'true');
+        window.open(CLIENT_DOMAIN, '_self');
+    }
+    _onError(error) {
+        localStorage.setItem('authentication_authenticated', 'false');
     }
     _getParameterFromUrl(url, target){
         let error = url.match(/[&\?]error=([^&]+)/);
         if (error) {
-            console.log('Error getting ' + target + ': ' + error[1]);
             return null;
         }
-        let regex = new RegExp("[&?]" + target + "=([\\w\\/\\-]+)");
+        let regex = new RegExp('[&?]' + target + '=([\\w\\/\\-]+)');
         if (regex.exec(url) != null) {
             return url.match(regex)[1];
         } else {
@@ -62,6 +66,7 @@ export default class Authentication {
 
         socket.on('connect', this._onConnect.bind(this));
         socket.on('authenticated set', this._onSetAuthenticated.bind(this));
+        socket.on('error', this._onError.bind(this));
     }
     setCode(code) {
         this._authentication.code = code;
@@ -73,8 +78,8 @@ export default class Authentication {
     setReceivedState(receivedState) {
         this._authentication.receivedState = receivedState;
     }
-    getScope(scopes) {
-        this._authentication.scopes = scopes;
+    getScope() {
+        return this._authentication.scopes;
     }
     getClientId() {
         return this._authentication.clientId;
