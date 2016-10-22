@@ -412,49 +412,62 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: @gray-custom;
-    #login-logo {
-        .center-horizontal;
-        top: 50px;
-        width: 180px;
-    }
-    .btn {
+    background: linear-gradient(135deg, @violet-normal 20%, @green-light 100%);
+    #login-container {
         .center-horizontal;
         .center-vertical;
-        text-align: center;
-        width: 250px;
-        outline: 0;
-        -webkit-transform: translateX(-125px);
-        -moz-transform: translateX(-125px);
-        -ms-transform: translateX(-125px);
-        -o-transform: translateX(-125px);
-        transform: translateX(-125px);
-    }
-    #login-fail {
-        .center-vertical;
-        .center-horizontal;
-        color: @red-light;
-        text-align: center;
-        width: 250px;
-        outline: 0;
-        -webkit-transform: translate(-125px, 60px);
-        -moz-transform: translate(-125px, 60px);
-        -ms-transform: translate(-125px, 60px);
-        -o-transform: translate(-125px, 60px);
-        transform: translate(-125px, 60px);
-    }
-    h5 {
-        .center-horizontal;
-        .center-vertical;
-        line-height: 1.5;
-        color: @green-normal;
-        width: 400px;
-        text-align: center;
-        -webkit-transform: translate(-200px, 100px);
-        -moz-transform: translate(-200px, 100px);
-        -ms-transform: translate(-200px, 100px);
-        -o-transform: translate(-200px, 100px);
-        transform: translate(-200px, 100px);
+        width: 600px;
+        height: 600px;
+        -webkit-transform: translate(-300px, -300px);
+        -moz-transform: translate(-300px, -300px);
+        -ms-transform: translate(-300px, -300px);
+        -o-transform: translate(-300px, -300px);
+        transform: translate(-300px, -300px);
+        border-radius: 5px;
+        background-color: rgba(36, 46, 65, 0.6);
+        #login-logo {
+            .center-horizontal;
+            top: 50px;
+            width: 150px;
+        }
+        .btn {
+            .center-horizontal;
+            .center-vertical;
+            text-align: center;
+            width: 250px;
+            outline: 0;
+            -webkit-transform: translateX(-125px);
+            -moz-transform: translateX(-125px);
+            -ms-transform: translateX(-125px);
+            -o-transform: translateX(-125px);
+            transform: translateX(-125px);
+        }
+        #login-fail {
+            .center-vertical;
+            .center-horizontal;
+            color: @red-light;
+            text-align: center;
+            width: 250px;
+            outline: 0;
+            -webkit-transform: translate(-125px, 60px);
+            -moz-transform: translate(-125px, 60px);
+            -ms-transform: translate(-125px, 60px);
+            -o-transform: translate(-125px, 60px);
+            transform: translate(-125px, 60px);
+        }
+        h5 {
+            .center-horizontal;
+            .center-vertical;
+            line-height: 1.5;
+            color: @green-light;
+            width: 400px;
+            text-align: center;
+            -webkit-transform: translate(-200px, 100px);
+            -moz-transform: translate(-200px, 100px);
+            -ms-transform: translate(-200px, 100px);
+            -o-transform: translate(-200px, 100px);
+            transform: translate(-200px, 100px);
+        }
     }
     #login-list {
         .center-horizontal;
@@ -469,7 +482,7 @@ body {
                 color: @white;
             }
         }
-        bottom: 50px;
+        bottom: 10px;
     }
 }
 

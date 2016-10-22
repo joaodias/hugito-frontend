@@ -1,6 +1,6 @@
 import Socket from '../../socket.js';
 
-const SERVER_DOMAIN = 'ws://localhost:4000';
+const SERVER_DOMAIN = 'ws://hugito.herokuapp.com';
 const CLIENT_DOMAIN = 'http://localhost:4001/';
 
 export default class Authentication {

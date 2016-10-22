@@ -10,7 +10,7 @@ const modal = {
         ],
         closeButton: 'Cancel',
         saveButton: 'Add Content',
-        type: 'addContent'
+        type: 'createContent'
 }
 
 class ContentControls extends Component{
