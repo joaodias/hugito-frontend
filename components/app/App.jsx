@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import SidebarSection from './sidebar/SidebarSection.jsx';
 import TopbarSection from './topbar/TopbarSection.jsx';
 import MainSection from './main/MainSection.jsx';
@@ -7,19 +7,24 @@ import ModalWrapper from './pops/ModalWrapper.jsx';
 import Socket from '../../socket.js';
 
 const CLIENT_DOMAIN = 'http://localhost:4001';
-const SERVER_DOMAIN = 'ws://localhost:4000';
+const SERVER_DOMAIN = 'ws://hugito.herokuapp.com';
 const ACCESS_TOKEN = localStorage.getItem('access_token')
 
-class App extends Component{
-    constructor(props){
+class App extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             connected: 'false',
             loggedIn: 'true',
-            user: {name: ''},
+            user: {
+                name: '',
+                email: '',
+                login: ''
+            },
             currentRepository: '',
+            currentBranch: '1-cool-branch',
             // represents the user inputed repository.
-            selectedRepository: '',
+            selectedRepository: {},
             repositoryIsValid: 'false',
             validRepositories: {
                 names: []
@@ -42,7 +47,9 @@ class App extends Component{
                 show: 'false',
                 title: '',
                 fieldNames: [
-                    {value: ''}
+                    {
+                        value: ''
+                    }
                 ],
                 closeButton: '',
                 saveButton: ''
@@ -57,212 +64,280 @@ class App extends Component{
 
         socket.on('repository validate', this.onRepositoryValidation.bind(this));
 
-        socket.on('content add', this.onAddContent.bind(this));
+        socket.on('content add', this.onCreateContent.bind(this));
         socket.on('content remove', this.onRemoveContent.bind(this));
         socket.on('content list', this.onListContent.bind(this));
         socket.on('content set', this.onSetContent.bind(this))
+        socket.on('content create', this.onCreateContent.bind(this))
 
         socket.on('error', this.onError.bind(this))
 
         socket.on('logout', this.logout.bind(this));
         socket.on('user set', this.onSetUser.bind(this));
     }
-    onConnect(){
+    onConnect() {
         this.setConnected('true');
         this.getUser();
     }
-    onDisconnect(){
+    onDisconnect() {
         this.setConnected('false');
     }
-    getUser(){
+    getUser() {
         let user = {
             name: '',
             accessToken: ACCESS_TOKEN
         }
         this.socket.emit('user get', user)
     }
-    onSetUser(user){
+    onSetUser(user) {
         this.setUser(user);
     }
-    logout(){
+    logout() {
         localStorage.setItem('authentication_authenticated', 'false');
         window.open(CLIENT_DOMAIN, '_self');
     }
-    validateRepository(name, branch){
+    validateRepository(name, branch) {
         let repository = {
             name: name,
             branch: branch,
-            valid: 'false',
             accessToken: ACCESS_TOKEN
         }
-        this.setSelectedRepository(name);
+        let selectedRepository = {
+            name: name,
+            branch: branch
+        }
+        this.setSelectedRepository(selectedRepository);
         this.socket.emit('repository validate', repository);
     }
-    onRepositoryValidation(repositoryIsValid){
-        console.log("REPO NAME: ", repositoryIsValid);
+    onRepositoryValidation(repositoryIsValid) {
         if (repositoryIsValid != 'Repository is valid.') {
             this.throwNotification('Repository is not valid.', 'false');
         } else {
-            // TODO: Make the current repository equals to the selected repository.
             this.setRepositorieIsValid('true');
             this.addValidRepository();
             this.buildRepositoryTree();
             this.throwNotification('Repository is ready!', 'true');
         }
     }
-    addValidRepository(){
+    addValidRepository() {
         let {selectedRepository} = this.state;
         let {validRepositories} = this.state;
-        validRepositories.names.push(selectedRepository);
+        validRepositories.names.push(selectedRepository.name);
         this.setValidRepositories(validRepositories);
     }
     // TODO: Remove validRepository
-    buildRepositoryTree(){
-        let {validRepositories} = this.state;
+    buildRepositoryTree() {
+        let {validRepositories, selectedRepository} = this.state;
         let {treeMenu} = this.state;
         for (var i = 0; i < validRepositories.names.length; i++) {
-            let navList = [{icon: 'fa fa-pencil', id: 'page-content', text: 'Page Content'}];
-            let treeEntry = {id: validRepositories.names[i], icon: 'fa fa-cube', text: validRepositories.names[i], navlist: navList};
+            // Use repositoryName&branch|page-content as an id to the options.
+            // This way one can parse the id to get the repository and branch to
+            // whom the option belong.
+            let navList = [
+                {
+                    icon: 'fa fa-pencil',
+                    id: validRepositories.names[i] + '&' + selectedRepository.branch + '|' + 'page-content',
+                    text: 'Page Content'
+                }
+            ];
+            // Use the group "repository name + repository branch" as an id to
+            // represent the webpage in the menu tree.
+            let id= validRepositories.names[i] + selectedRepository.branch;
+            let text = validRepositories.names[i] + " [" + selectedRepository.branch + "]";
+            let treeEntry = {
+                id: id,
+                icon: 'fa fa-cube',
+                text: text,
+                navlist: navList
+            };
             treeMenu.push(treeEntry);
         }
         return treeMenu;
     }
-    setActiveMenuItem(activeMenuItem){
+    setActiveMenuItem(activeMenuItem) {
         this.setState({activeMenuItem});
-        switch(activeMenuItem) {
-            case '':
-                // Set all other shows to false
-                this.setShowContent('false');
-                // DO NOTHING
-                break;
-            case 'page-content':
-                console.log("setActiveMenuItem");
-                // Get list of content from the server.
-                this.listContent(this.state.selectedRepository);
-                this.setShowContent('true');
-                break;
-            default:
-                // Clear everything
-                activeMenuItem = '';
-                this.setState({activeMenuItem});
-                this.setShowContent('false');
-                break;
+        if (activeMenuItem == '') {
+            // Set all other shows to false
+            this.setShowContent('false');
+        } else if (activeMenuItem.indexOf('page-content') !== -1) {
+            // Get list of content from the server.
+            let webpage = activeMenuItem.split('|')[0];
+            let name = webpage.split('&')[0];
+            let branch = webpage.split('&')[1];
+            let selectedRepository = {
+                name: name,
+                branch: branch,
+            }
+            this.setSelectedRepository(selectedRepository);
+            this.listContent(selectedRepository);
+            this.setShowContentEditor('false');
+            this.setShowContent('true');
+        } else {
+            // Clear everything
+            activeMenuItem = '';
+            this.setState({activeMenuItem});
+            this.setShowContent('false');
         }
     }
-    addContent(fileName){
-        let {user} = this.state;
+    createContent(fileName) {
+        let {user, selectedRepository, currentBranch} = this.state;
         const data = {
-            header: fileName,
-            author: user.name,
-            date: 'some date'
+            repositoryName: selectedRepository.name,
+            branch: selectedRepository.branch,
+            title: fileName,
+            accessToken: ACCESS_TOKEN
         }
-        this.socket.emit('content add', data);
+        this.socket.emit('content create', data);
     }
-    onAddContent(contentElement){
+    onCreateContent(content) {
         let {contentElements} = this.state;
+        let contentElement = {
+            header: content.title,
+            author: content.commit.author.name,
+            email: content.commit.author.email,
+            date: ""
+        }
         contentElements.push(contentElement);
-        this.setContentElements({contentElements});
+        this.setContentElements(contentElements);
     }
-    removeContent(contentElement){
-        this.socket.emit('content remove', contentElement);
+    removeContent(contentElement) {
+        let {selectedRepository} = this.state;
+        const data = {
+            repositoryName: selectedRepository.name,
+            title: contentElement.header,
+            branch: selectedRepository.branch,
+            accessToken: ACCESS_TOKEN
+        }
+        this.socket.emit('content remove', data);
     }
-    onRemoveContent(contentElement){
+    onRemoveContent(content) {
         let {contentElements} = this.state;
+        let contentElement = {
+            header: content.title,
+            author: content.commit.author.name,
+            email: content.commit.author.email,
+            date: ""
+        }
         for (var i = 0; i < contentElements.length; i++) {
-            if (contentElements[i] === contentElement) {
+            if (contentElements[i].header === contentElement.header) {
                 contentElements.splice(i, 1);
                 this.setContentElements(contentElements);
                 return;
             }
         }
     }
-    listContent(){
-        let {selectedRepository} = this.state;
+    updateContent() {
+        let {selectedRepository, currentBranch, currentEditingContentElement} = this.state;
+        let data = {
+            repositoryName: selectedRepository.name,
+            branch: selectedRepository.branch,
+            title: currentEditingContentElement.title,
+            body: currentEditingContentElement.body,
+            accessToken: ACCESS_TOKEN
+        }
+        this.socket.emit('content update', data);
+    }
+    onUpdateContent(content) {
+        throwNotification("Content successfully published.", true);
+    }
+    listContent(repository) {
         let contentElements = {
-            name: selectedRepository,
+            name: repository.name,
+            branch: repository.branch,
             titles: [],
             accessToken: ACCESS_TOKEN
         }
         this.socket.emit('content list', contentElements);
     }
-    onListContent(content){
-        let {contentElements, showContent} = this.state;
+    onListContent(content) {
+        let {showContent} = this.state;
+        let contentElements = [];
         for (var i = 0; i < content.title.length; i++) {
-            let contentElement = {header: content.title[i], author: '', date: ''};
-            contentElements.push(contentElement)
+            let contentElement = {
+                header: content.title[i],
+                author: '',
+                date: ''
+            };
+            contentElements.push(contentElement);
         }
         this.setContentElements(contentElements);
     }
-    getFileContent(fileName){
-        let {selectedRepository} = this.state;
+    getFileContent(fileName) {
+        let {selectedRepository, currentBranch} = this.state;
         let data = {
-            repositoryName: selectedRepository,
+            repositoryName: selectedRepository.name,
+            branch: selectedRepository.branch,
             title: fileName,
             body: '',
             accessToken: ACCESS_TOKEN
         }
         this.socket.emit('content get', data);
     }
-    onSetContent(currentEditingContentElement){
+    onSetContent(content) {
+        let data = {
+            repositoryName: content.repositoryName,
+            branch: content.branch,
+            title: content.title,
+            body: content.content
+        }
         this.setShowContent('false');
         this.setShowContentEditor('true');
-        this.setFileName(currentEditingContentElement.title);
-        this.setCurrentEditingContent(currentEditingContentElement);
+        this.setFileName(data.title);
+        this.setCurrentEditingContent(data);
     }
-    throwNotification(message, isSuccess){
+    throwNotification(message, isSuccess) {
         const notification = {
-                isActive: 'true',
-                message: message,
-                dismissAfter: 2000,
-                style: 'true',
-                isSuccess: isSuccess
+            isActive: 'true',
+            message: message,
+            dismissAfter: 2000,
+            style: 'true',
+            isSuccess: isSuccess
         }
         this.setNotification(notification);
     }
-    setConnected(connected){
+    setConnected(connected) {
         this.setState({connected});
     }
-    setUser(user){
+    setUser(user) {
         this.setState({user});
     }
-    setSelectedRepository(selectedRepository){
+    setSelectedRepository(selectedRepository) {
         this.setState({selectedRepository});
     }
-    setValidRepositories(validRepositories){
+    setValidRepositories(validRepositories) {
         this.setState({validRepositories});
     }
-    setRepositorieIsValid(repositoryIsValid){
+    setRepositorieIsValid(repositoryIsValid) {
         this.setState({repositoryIsValid});
     }
-    setShowContent(showContent){
+    setShowContent(showContent) {
         this.setState({showContent});
     }
-    setContentElements(contentElements){
+    setContentElements(contentElements) {
         this.setState({contentElements});
     }
-    setShowContentEditor(showContentEditor){
+    setShowContentEditor(showContentEditor) {
         this.setState({showContentEditor});
     }
-    setFileContent(currentEditingContentElement){
+    setFileContent(currentEditingContentElement) {
         this.setState({currentEditingContentElement});
     }
-    setCurrentEditingContent(currentEditingContentElement){
+    setCurrentEditingContent(currentEditingContentElement) {
         this.setState({currentEditingContentElement});
     }
-    setFileName(fileName){
+    setFileName(fileName) {
         this.setState({fileName});
     }
-    setNotification(notification){
+    setNotification(notification) {
         this.setState({notification});
     }
-    setModal(modal){
+    setModal(modal) {
         this.setState({modal});
     }
-    onError(error){
-        console.log("ONERROR!", error);
+    onError(error) {
         this.throwNotification(error, 'false');
     }
-    render(){
+    render() {
         return (
             <div>
                 <TopbarSection
@@ -276,7 +351,7 @@ class App extends Component{
                     setShowContent={this.setShowContent.bind(this)}
                     setShowContentEditor={this.setShowContentEditor.bind(this)}
                     logout={this.logout.bind(this)}
-                />
+                    updateContent={this.updateContent.bind(this)}/>
                 <SidebarSection
                     setActiveMenuItem={this.setActiveMenuItem.bind(this)}
                     activeMenuItem={this.state.activeMenuItem}
@@ -286,8 +361,7 @@ class App extends Component{
                     repositoryIsValid={this.state.repositoryIsValid}
                     setShowContent={this.setShowContent.bind(this)}
                     setShowContentEditor={this.setShowContentEditor.bind(this)}
-                    setModal={this.setModal.bind(this)}
-                />
+                    setModal={this.setModal.bind(this)}/>
                 <MainSection
                     showContent={this.state.showContent}
                     showContentEditor={this.state.showContentEditor}
@@ -296,18 +370,15 @@ class App extends Component{
                     removeContent={this.removeContent.bind(this)}
                     currentEditingContentElement={this.state.currentEditingContentElement}
                     getFileContent={this.getFileContent.bind(this)}
-                    setFileContent={this.setFileContent.bind(this)}
-                />
+                    setFileContent={this.setFileContent.bind(this)}/>
                 <NotificationWrapper
                     notification={this.state.notification}
-                    setNotification={this.setNotification.bind(this)}
-                />
+                    setNotification={this.setNotification.bind(this)}/>
                 <ModalWrapper
                     modal={this.state.modal}
                     setModal={this.setModal.bind(this)}
-                    addContent={this.addContent.bind(this)}
-                    validateRepository={this.validateRepository.bind(this)}
-                />
+                    createContent={this.createContent.bind(this)}
+                    validateRepository={this.validateRepository.bind(this)}/>
             </div>
         )
     }

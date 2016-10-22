@@ -23,7 +23,8 @@ TopbarSection.propTypes = {
     setModal: React.PropTypes.func.isRequired,
     setShowContent: React.PropTypes.func.isRequired,
     setShowContentEditor: React.PropTypes.func.isRequired,
-    logout: React.PropTypes.func.isRequired
+    logout: React.PropTypes.func.isRequired,
+    updateContent: React.PropTypes.func.isRequired
 }
 
 export default TopbarSection

@@ -17,7 +17,7 @@ class ModalWrapper extends Component {
         this.state = {
             value: '',
             repository: '',
-            branch: ''
+            branch: 'master'
         }
     }
     onChange(e){
@@ -34,12 +34,12 @@ class ModalWrapper extends Component {
     }
     onSave(){
         const {value, repository, branch} = this.state;
-        const {modal, validateRepository, addContent} = this.props;
+        const {modal, validateRepository, createContent} = this.props;
         if (modal.type === 'addRepository') {
             validateRepository(this.state.repository, this.state.branch);
             this.onHide();
-        } else if(modal.type === 'addContent') {
-            addContent(value);
+        } else if(modal.type === 'createContent') {
+            createContent(value);
             this.onHide();
         }
     }
@@ -87,7 +87,7 @@ class ModalWrapper extends Component {
 ModalWrapper.propTypes = {
     modal: React.PropTypes.object.isRequired,
     setModal: React.PropTypes.func.isRequired,
-    addContent: React.PropTypes.func.isRequired,
+    createContent: React.PropTypes.func.isRequired,
     validateRepository: React.PropTypes.func.isRequired
 }
 
