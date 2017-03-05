@@ -1,13 +1,13 @@
 import 'whatwg-fetch';
 
-const CLIENT_DOMAIN = 'http://localhost:3000';
-const SERVER_DOMAIN = 'http://localhost:4000';
+const CLIENT_DOMAIN = 'http://hugito.surge,sh'
+const SERVER_DOMAIN = 'http://138.197.15.62:4005'
 
 export default class Authentication {
     constructor() {
         this._authentication = {
-            clientId: 'f3387b979183f21efc69',
-            secret: 'ff4f508cafe7537c811639f9e9f7d20221c6395d',
+            clientId: 'ca2048cb35218bb7e36a',
+            secret: '829989b4cffd217aa7e51ea16a6a30a363dfac7f',
             scopes: [
                 'user:e-mail',
                 'repo'
