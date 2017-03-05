@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 
-const CLIENT_DOMAIN = 'http://hugito.surge,sh'
+const CLIENT_DOMAIN = 'http://hugito.surge.sh'
 const SERVER_DOMAIN = 'http://138.197.15.62:4005'
 
 export default class Authentication {
