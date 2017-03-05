@@ -7,6 +7,7 @@ class ContentEditor extends Component {
             <MarkdownEditor
                 contentElement={this.props.currentEditingContentElement}
                 setFileContent={this.props.setFileContent}
+                filterContentHeader={this.props.filterContentHeader}
             />
         )
     }

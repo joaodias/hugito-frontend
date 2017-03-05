@@ -7,7 +7,8 @@ const modal = {
         title: 'Add Webpage',
         fieldNames: [
             {value: 'Repository:', placeholder: 'Your Repository Name', type: 'repositories'},
-            {value: 'Branch:', default: 'master', placeholder: 'Your Branch Name', type: 'branches'}
+            {value: 'Project Branch:', default: 'hugo-project', placeholder: 'Your Hugo Project Branch Name', type: 'projectBranch'},
+            {value: 'Public Branch:', default: 'master', placeholder: 'Your Public Branch Name', type: 'publicBranch'}
         ],
         closeButton: 'Cancel',
         saveButton: 'Add Webpage',
@@ -34,7 +35,6 @@ class RepositorySection extends Component{
 }
 
 RepositorySection.propTypes = {
-    validateRepository: React.PropTypes.func.isRequired,
     setModal: React.PropTypes.func.isRequired
 }
 

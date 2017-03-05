@@ -15,31 +15,46 @@ class ModalWrapper extends Component {
     constructor(props){
         super(props);
         this.state = {
-            value: '',
+            path: 'content/post',
+            fileName: '',
+            title: '',
             repository: '',
-            branch: 'master'
+            projectBranch: 'hugo-project',
+            publicBranch: 'master'
         }
     }
     onChange(e){
         if (e.target.id === 'repositories') {
             const repository = e.target.value;
             this.setState({repository});
-        } else if (e.target.id === 'branches') {
-            const branch = e.target.value;
-            this.setState({branch});
-        } else {
-            const value = e.target.value
-            this.setState({value});
+        } else if (e.target.id === 'publicBranch') {
+            const publicBranch = e.target.value;
+            this.setState({publicBranch});
+        } else if (e.target.id === 'projectBranch') {
+            const projectBranch = e.target.value;
+            this.setState({projectBranch});
+        } else if (e.target.id === 'fileName') {
+            // By default md extension is added. In the future more extensions
+            // should be supported.
+            const fileName = e.target.value + '.md';
+            this.setState({fileName});
+        } else if (e.target.id === 'title') {
+            const title = e.target.value;
+            this.setState({title});
         }
     }
     onSave(){
-        const {value, repository, branch} = this.state;
+        const {fileName, path, title, repository, publicBranch, projectBranch} = this.state;
         const {modal, validateRepository, createContent} = this.props;
         if (modal.type === 'addRepository') {
-            validateRepository(this.state.repository, this.state.branch);
+            const branches = {
+                publicBranch: publicBranch,
+                projectBranch: projectBranch
+            }
+            validateRepository(repository, branches);
             this.onHide();
         } else if(modal.type === 'createContent') {
-            createContent(value);
+            createContent(fileName, title, path);
             this.onHide();
         }
     }
@@ -61,7 +76,7 @@ class ModalWrapper extends Component {
                 <ModalBody>{
                     modal.fieldNames.map( field =>{
                         return (
-                            <div>
+                            <div key={field.value}>
                                 <Form horizontal>
                                     <FormGroup controlId='formHorizontalText'>
                                       <Col componentClass={ControlLabel} sm={3}>

@@ -35,6 +35,7 @@ class MarkdownEditor extends Component {
     }
 }
 
+
 MarkdownEditor.propTypes = {
     contentElement: React.PropTypes.object.isRequired,
     setFileContent: React.PropTypes.func.isRequired
