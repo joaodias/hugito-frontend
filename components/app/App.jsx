@@ -7,9 +7,8 @@ import 'whatwg-fetch'
 import Notification from 'rc-notification'
 const notification = Notification.newInstance({})
 
-
-const CLIENT_DOMAIN = 'http://localhost:3000'
-const SERVER_DOMAIN = 'http://localhost:4000'
+const CLIENT_DOMAIN = 'http://hugito.surge,sh'
+const SERVER_DOMAIN = 'http://138.197.15.62:4005'
 const ACCESS_TOKEN = localStorage.getItem('access_token')
 
 class App extends Component {
