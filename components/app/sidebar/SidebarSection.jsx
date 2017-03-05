@@ -19,7 +19,6 @@ SidebarSection.propTypes = {
     activeMenuItem: React.PropTypes.string.isRequired,
     setActiveMenuItem: React.PropTypes.func.isRequired,
     treeMenu: React.PropTypes.array.isRequired,
-    validateRepository: React.PropTypes.func.isRequired,
     repositoryIsValid: React.PropTypes.string.isRequired,
     setModal: React.PropTypes.func.isRequired
 }

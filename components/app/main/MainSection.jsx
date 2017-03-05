@@ -21,6 +21,8 @@ MainSection.propTypes = {
     contentElements: React.PropTypes.array.isRequired,
     repositoryIsValid: React.PropTypes.string.isRequired,
     currentEditingContentElement: React.PropTypes.object.isRequired,
+    listContent: React.PropTypes.func.isRequired,
+    selectedRepository: React.PropTypes.object.isRequired,
     removeContent: React.PropTypes.func.isRequired,
     getFileContent: React.PropTypes.func.isRequired,
     setFileContent: React.PropTypes.func.isRequired

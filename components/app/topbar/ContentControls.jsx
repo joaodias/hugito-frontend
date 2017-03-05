@@ -6,7 +6,8 @@ const modal = {
         show: 'true',
         title: 'New Content File',
         fieldNames: [
-            {value: 'Content Title'}
+            {value: 'File Name', placeholder: 'The name for your file without extension', type: 'fileName'},
+            {value: 'Content Title', placeholder: 'The title for your content', type: 'title'},
         ],
         closeButton: 'Cancel',
         saveButton: 'Add Content',

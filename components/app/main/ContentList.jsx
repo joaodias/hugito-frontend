@@ -7,9 +7,10 @@ class ContentList extends Component{
         return(
             <ListGroup id='content-list'>{
                 this.props.contentElements.map( element =>{
+                    const key = element.repositoryName + '_' + element.path + '_' + element.header
                     return <ContentListItem
                         contentElement={element}
-                        key={element.id}
+                        key={key}
                         {...this.props}
                     />
                 })
@@ -20,6 +21,8 @@ class ContentList extends Component{
 
 ContentList.propTypes = {
     contentElements: React.PropTypes.array.isRequired,
+    listContent: React.PropTypes.func.isRequired,
+    selectedRepository: React.PropTypes.object.isRequired,
     removeContent: React.PropTypes.func.isRequired,
     getFileContent: React.PropTypes.func.isRequired
 }

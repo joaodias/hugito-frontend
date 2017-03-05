@@ -12,7 +12,7 @@ module.exports = {
                 exclude: /node-modules/
             }, {
                 test: /\.js$/,
-                loader: 'babel',
+                loader: 'babel-loader',
                 exclude: /node_modules/
             }
             , {
@@ -20,7 +20,7 @@ module.exports = {
                 loaders: ["style", "css", "sass"]
             }, {
                 test: /\.json$/,
-                loader: 'json'
+                loader: 'json-loader'
             }
         ]
     }
